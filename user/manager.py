@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, first_name, last_name, password, **extra_fields):
+    def create_user(self, username, email, first_name, last_name, password, password2=None, **extra_fields):
         if not username: 
             raise ValidationError("User must have a username")
         
