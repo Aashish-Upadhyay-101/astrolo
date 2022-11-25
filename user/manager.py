@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, first_name, last_name, password, password2=None, **extra_fields):
+    def create_user(self, username, first_name, last_name, email, password, password2=None, **extra_fields):
         if not username: 
             raise ValidationError("User must have a username")
         
@@ -25,7 +25,7 @@ class UserManager(BaseUserManager):
             first_name=first_name, 
             last_name=last_name, 
             email=email,
-             **extra_fields
+            **extra_fields
         )
         
         user.set_password(password)
@@ -35,10 +35,10 @@ class UserManager(BaseUserManager):
         return user
 
 
-    def create_superuser(self, username, email, first_name, last_name, password, **extra_fields):
+    def create_superuser(self, username, first_name, last_name, email, password, **extra_fields):
         
-        extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
 
         if extra_fields.get("is_staff") is not True:
@@ -57,7 +57,6 @@ class UserManager(BaseUserManager):
             raise ValidationError("Superuser must have password")
 
         email = self.normalize_email(email)
-        user = self.create_user(username, first_name, last_name, password, email, **extra_fields)
-        
-        user.save()
+        user = self.create_user(username, first_name, last_name, email, password, **extra_fields)
+        user.save(using=self._db)
         return user 
