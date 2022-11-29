@@ -14,9 +14,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         exclude = ["pkid"]
 
 
-class ProfileCreateSerailzer(serializers.ModelSerializer):
+class ProfileUpdateSerailizer(serializers.ModelSerializer):
+    country = CountryField(name_only=True)
+
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = ["phone_number", "country", "gender", "zip_code", "city", "about_me", "profile_picture", "profile_intro_video", "profile_type"]
 
 
+    
