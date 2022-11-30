@@ -33,9 +33,7 @@ class UserLoginView(APIView):
         serializer.is_valid(raise_exception=True)
         email = serializer.data.get("email")
         password = serializer.data.get("password")
-        print(email, password)
         user = authenticate(email=email, password=password)
-        print(user)
         if user is not None:
             token = get_token_for_user(user)
             return Response({"token": token, "message": "Login Successful"}, status=status.HTTP_200_OK)

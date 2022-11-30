@@ -56,7 +56,7 @@ class Reviews(TimeStampUUIDModel):
 
     rater = models.ForeignKey(AUTH_USER_MODEL, related_name="reviews", on_delete=models.CASCADE)
     astrologer = models.ForeignKey(Profile, related_name="astrologer_review", on_delete=models.SET_NULL, null=True)
-    rating = models.IntegerField(choices=REVIEW_RANGE, default=0)
+    rating = models.IntegerField(choices=REVIEW_RANGE, default=0, blank=True, null=True)
     review_comment = models.TextField(max_length=300, blank=True, null=True)
 
     class Meta:

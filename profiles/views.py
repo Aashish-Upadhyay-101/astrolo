@@ -54,7 +54,11 @@ class AstrologerReviewAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, profile_id, format=None):
-        astrologer_profile = Profile.objects.get(id=profile_id, is_astrologer=True)
+        astrologer_profile = Profile.objects.get(id=profile_id)
+
+        if not astrologer_profile.is_astrologer:
+            return Response({"message": "You can't rate a non astrologer"}, status=status.HTTP_400_BAD_REQUEST)
+
         astrologer_profile_user = astrologer_profile.user 
 
         # data
@@ -70,14 +74,28 @@ class AstrologerReviewAPIView(APIView):
             return Response({"message": "The astrologer is already being rated by you"}, status=status.HTTP_400_BAD_REQUEST)
 
         # check if the rating is being selected or not
-        elif data.get("rating") == 0:
-            return Response({"message": "Please select a rating"}, status=status.HTTP_400_BAD_REQUEST)
+        elif data.get("rating") == 0 or data.get("rating") > 5:
+            return Response({"message": "Please select a rating (1 - 5)"}, status=status.HTTP_400_BAD_REQUEST)
         
         # create Rating
         else:
             Reviews.objects.create(rater=request.user, astrologer=astrologer_profile, rating=data.get("rating"), review_comment=data.get("review_comment"))
 
+        astrologer_all_reviews = astrologer_profile.astrologer_review.all()
+        astrologer_profile.num_of_reviews = len(astrologer_all_reviews)
+
+        print(astrologer_all_reviews)
+
+        total_rating = 0
+        for review in astrologer_all_reviews:
+            total_rating += review.rating
         
+        astro_rating = round(total_rating / len(astrologer_all_reviews), 2)
+        astrologer_profile.rating = astro_rating 
+        astrologer_profile.save()
+
+        return Response({"Review Added"}, status=status.HTTP_201_CREATED)
+
 
 
         
