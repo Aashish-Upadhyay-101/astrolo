@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Profile
+from .models import Profile, Gender, Reviews
 from common.serializers import UserModelSerializer
 from django_countries.serializer_fields import CountryField
-from .models import Gender
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserModelSerializer()
@@ -22,4 +22,20 @@ class ProfileUpdateSerailizer(serializers.ModelSerializer):
         fields = ["phone_number", "country", "gender", "zip_code", "city", "about_me", "profile_picture", "profile_intro_video", "profile_type"]
 
 
+
+class ProfileReviewSerializer(serializers.ModelSerializer):
+    rater = serializers.SerializerMethodField(read_only=True)
+    astrologer = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Reviews
+        exclude = ["pkid", "updated_at"]
+
+    def get_rater(self, obj):
+        return obj.rater.username
+
+    def get_astrologer(self, obj):
+        return obj.astrologer.user.username
+
     
+

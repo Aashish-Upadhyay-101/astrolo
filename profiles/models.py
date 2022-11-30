@@ -36,12 +36,36 @@ class Profile(TimeStampUUIDModel):
     rating = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
     num_of_reviews = models.PositiveIntegerField(default=0, blank=True, null=True)
 
+    @property
+    def is_astrologer(self):
+        return self.profile_type == "Astrologer"
+
     def __str__(self):
         return self.user.username
 
-    
+
+
 class Reviews(TimeStampUUIDModel):
-    pass 
+    REVIEW_RANGE = [
+        (1, "Very Bad"),
+        (2, "Fair"),
+        (3, "Good"),
+        (4, "Very Good"),
+        (5, "Excellent"),
+    ]
+
+    rater = models.ForeignKey(AUTH_USER_MODEL, related_name="reviews", on_delete=models.CASCADE)
+    astrologer = models.ForeignKey(Profile, related_name="astrologer_review", on_delete=models.SET_NULL, null=True)
+    rating = models.IntegerField(choices=REVIEW_RANGE, default=0)
+    review_comment = models.TextField(max_length=300, blank=True, null=True)
+
+    class Meta:
+        unique_together = ["rater", "astrologer"]
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"
+
+    def __str__(self):
+        return f"{self.astrologer} rating is -> {self.rating}"
 
 
 @receiver(post_save, sender=AUTH_USER_MODEL)
