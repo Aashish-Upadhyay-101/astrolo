@@ -1,0 +1,24 @@
+.navbar {
+  height: 6.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3.2rem;
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+}
+
+.navbar__right-link {
+  padding: 0.8rem 1rem;
+  transition: all 0.3s;
+}
+
+.navbar__right-link:hover {
+  color: var(--primary-color-1);
+  cursor: pointer;
+}
