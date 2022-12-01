@@ -20,6 +20,7 @@ body {
 
 :root {
   --primary-color-1: #f72585;
+  --primary-color-1-hover: #bf105f;
   --primary-color-2: #7209b7;
   --primary-color-3: #3a0ca3;
   --primary-color-4: #4361ee;
@@ -65,4 +66,11 @@ a {
 
 .text-color-primary {
   color: var(--primary-color-1);
+}
+
+.btn {
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
 }

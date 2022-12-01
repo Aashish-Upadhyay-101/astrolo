@@ -1,11 +1,7 @@
-import React, { useState } from "react";
-import { Avatar } from "antd";
-import { BellOutlined, HeartOutlined, UserOutlined } from "@ant-design/icons";
+import React from "react";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   return (
     <nav className="navbar">
       <div className="navbar-brand">

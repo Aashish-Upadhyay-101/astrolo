@@ -1,0 +1,42 @@
+.section-hero {
+  padding: 6.4rem 0;
+}
+
+.hero {
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+.hero__header > h1 {
+  text-align: center;
+  margin-bottom: 3.2rem;
+  line-height: 1.1;
+}
+
+.hero__header-description {
+  font-size: 2rem;
+  line-height: 1.8;
+}
+
+.btn-action-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-action {
+  display: inline-block;
+  background-color: var(--primary-color-1);
+  margin-top: 2.4rem;
+  padding: 1.2rem 4.8rem;
+  font-size: 1.8rem;
+  color: #fff;
+  border-radius: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-action:hover {
+  background-color: var(--primary-color-1-hover);
+  cursor: pointer;
+}
