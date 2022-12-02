@@ -1,12 +1,14 @@
 import React from "react";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      <Home />
+      {/* <Home /> */}
+      <Login />
     </div>
   );
-}
+};
 
 export default App;

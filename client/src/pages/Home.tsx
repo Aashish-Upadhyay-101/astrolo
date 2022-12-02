@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import "./Home.css";
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <>
       <Navbar />
@@ -18,9 +18,11 @@ const Home = () => {
           <div className="hero__header-description">
             Find Astrologers near your place, book an appointment and discuss
             your queries and furtunes. Astrol
-            <span className="text-color-primary">o</span> makes it easier for
-            people to connect with your favourite astrologer at anytime and
-            everywhere around the world through this platform.
+            <span className="text-color-primary">
+              <strong>o </strong>
+            </span>
+            makes it easier for people to connect with your favourite astrologer
+            at anytime and everywhere around the world through this platform.
           </div>
 
           <div className="btn-action-wrapper">
