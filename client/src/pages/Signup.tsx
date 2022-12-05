@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import "../Components/Navbar.css";
@@ -14,7 +15,9 @@ const Signup: React.FC = () => {
       <nav className="navbar">
         <div className="navbar-brand">
           <h1 className="text-2">
-            Astrol<span className="text-color-primary">o</span>
+            <Link to="/">
+              Astrol<span className="text-color-primary">o</span>
+            </Link>
           </h1>
         </div>
       </nav>
@@ -95,9 +98,9 @@ const Signup: React.FC = () => {
             </Button>
             <div className="m-2">
               <span>Already have an account? </span>
-              <a className="text-color-primary" href="">
+              <Link className="text-color-primary" to="/login">
                 Login now!
-              </a>
+              </Link>
             </div>
           </Form.Item>
         </Form>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import "./Home.css";
 
@@ -26,7 +27,9 @@ const Home: React.FC = () => {
           </div>
 
           <div className="btn-action-wrapper">
-            <a className="btn-action">Lets go</a>
+            <Link to="/signup" className="btn-action">
+              Lets go
+            </Link>
           </div>
         </div>
       </section>

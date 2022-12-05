@@ -39,4 +39,5 @@
 .btn-action:hover {
   background-color: var(--primary-color-1-hover);
   cursor: pointer;
+  color: #fff;
 }
