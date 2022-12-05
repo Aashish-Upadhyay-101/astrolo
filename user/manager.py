@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
+        extra_fields.setdefault("is_active", False)
         user.save()
         return user
 
