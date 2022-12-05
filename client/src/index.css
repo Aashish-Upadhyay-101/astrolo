@@ -98,6 +98,10 @@ a {
   background-color: var(--primary-color-1-hover) !important;
 }
 
+.ant-design-form {
+  margin-top: 2.4rem;
+}
+
 .site-form-item-icon {
   color: var(--primary-color-1);
 }

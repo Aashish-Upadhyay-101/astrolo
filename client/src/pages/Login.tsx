@@ -26,12 +26,12 @@ const Login: React.FC = () => {
         <h1 className="text-2">Login</h1>
         <Form
           name="login form"
-          className="login-form"
+          className="ant-design-form"
           onFinish={loginSubmitHandler}
         >
           <Form.Item
             name="email"
-            rules={[{ required: true, message: "Please input your Email!" }]}
+            rules={[{ required: true, message: "Please enter your Email!" }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
@@ -40,9 +40,9 @@ const Login: React.FC = () => {
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[{ required: true, message: "Please enter your Password!" }]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
