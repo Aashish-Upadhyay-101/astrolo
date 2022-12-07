@@ -1,12 +1,22 @@
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import smart_str
+from django.core.mail import send_mail
+from django.conf import settings
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.auth import authenticate
-from .serializers import UserLoginSerializer, UserRegisterSerializer
-from common.serializers import UserModelSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
+from common.serializers import UserModelSerializer
+from common.exceptions import UserNotFound, VerificationCodeExpires
+from .serializers import UserLoginSerializer, UserRegisterSerializer
+
+
+User = get_user_model()
 
 # generate token manually 
 def get_token_for_user(user):
@@ -26,10 +36,6 @@ class UserRegistrationView(APIView):
         token = get_token_for_user(user)
         return Response({"token": token, "message": "Registration Successful"}, status=status.HTTP_201_CREATED)
 
-
-class AccountVerifcationAPIView(APIView):
-    def post(self, request, code, format=None):
-        pass 
 
 
 class UserLoginView(APIView):
@@ -54,3 +60,46 @@ class UserProfileView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
         
 
+class ActivateAccount(APIView):
+    def get(self, request, username, format=None):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise UserNotFound
+        
+        user_id = str(user.id).encode()
+        uid = urlsafe_base64_encode(user_id)
+        token = PasswordResetTokenGenerator().make_token(user)
+        account_activation_url = f"http://127.0.0.1:8000/api/auth/activate-account/{uid}/{token}/"
+
+        # email
+        subject = "Account activation for Astrolo"
+        email_body = f'Hello {user.get_full_name}, \nclick the button below to activate your account.\n  \
+         <a style="padding:8px 12px; color: #333; background-color: green; " href={account_activation_url}>Activate</a>'               
+        to = user.email 
+        email_from = settings.EMAIL_HOST_USER
+
+        try:
+            print("sending")
+            send_mail(subject, email_body, email_from, [to])
+            return Response({"message": "Email sent successfully"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+
+        return Response({"message": "There was problem sending email please try again."})
+
+
+class VerifyAndActivateAccount(APIView):
+    def get(self, request, uid, token, format=None):
+        user_id = smart_str(urlsafe_base64_decode(uid))
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise UserNotFound
+        
+        if not PasswordResetTokenGenerator().check_token(user,token):
+            return Response({"message": "Token is invalid, please request another one"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        user.is_active = True
+        user.save()
+        return Response({"message": "Credentials Valid", "uid": uid, "token": token}, status=status.HTTP_200_OK)

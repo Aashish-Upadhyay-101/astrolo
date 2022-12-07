@@ -1,6 +1,6 @@
 # from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import User, AccountVerification
+from .models import User
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -32,14 +32,3 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         fields = ["email", "password"]
-
-
-# class AccountVerificationSerializer(serializers.ModelField):
-#     code = serializers.CharField(max_length=6, write_only=True)
-
-#     class Meta:
-#         model = AccountVerification
-#         fields = ["code"]
- 
-#     def create(self, validated_data):
-        

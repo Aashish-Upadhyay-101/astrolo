@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ProfileSerializer, ProfileUpdateSerailizer
 from .models import Profile, Reviews
-from .exceptions import ProfileNotFound, NotYourProfile
+from common.exceptions import ProfileNotFound, NotYourProfile
 
 
 User = get_user_model()
