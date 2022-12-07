@@ -17,6 +17,14 @@ class ProfilesAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class GetMyProfileAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        profile = request.user.profile
+        serializer = ProfileSerializer(instance=profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 # patch request -> "MALE",  phone_number -> "<country_code><phone_number>"
 class ProfileGetUpdateAPIView(APIView):
     permission_classes = [IsAuthenticated]

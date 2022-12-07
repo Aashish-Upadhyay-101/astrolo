@@ -37,7 +37,7 @@ const ActivateAccount: React.FC = () => {
         }}
         className="activate"
       >
-        <h1 className="text-2">Activate account</h1>
+        <h1 className="text-2">Activate Verification</h1>
 
         <p
           style={{ fontSize: "1.6rem", marginTop: "2.4rem", lineHeight: "1.7" }}

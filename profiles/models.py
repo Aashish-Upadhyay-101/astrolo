@@ -43,7 +43,6 @@ class Profile(TimeStampUUIDModel):
         return self.user.username
 
 
-
 class Reviews(TimeStampUUIDModel):
     REVIEW_RANGE = [
         (1, "Very Bad"),
