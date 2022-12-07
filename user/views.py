@@ -75,7 +75,7 @@ class ActivateAccount(APIView):
         # email
         subject = "Account activation for Astrolo"
         email_body = f'Hello {user.get_full_name}, \nclick the button below to activate your account.\n  \
-         <a style="padding:8px 12px; color: #333; background-color: green; " href={account_activation_url}>Activate</a>'               
+         <a style="padding:8px 12px; color: #fff; background-color: green; text-decoration: none; " href={account_activation_url}>Activate</a>'               
         to = user.email 
         email_from = settings.EMAIL_HOST_USER
 
