@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
+import AuthService from "./authService";
 
 export interface AuthState {
-  user: Map<string, string>;
-  userToken: Map<string, string>;
+  user: {};
+  userToken: {};
   loading: boolean;
   success: boolean;
   error: boolean;
@@ -11,26 +12,41 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: new Map(),
-  userToken: new Map(),
+  user: {},
+  userToken: {},
   loading: false,
   success: false,
   error: false,
   message: "",
 };
 
+const loginThunk = createAsyncThunk(
+  "auth/login",
+  async (userDetail, thunkAPI) => {
+    try {
+      return await AuthService.login(userDetail);
+    } catch (error) {
+      const message = "error message";
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     reset: (state) => {
-      state.user = new Map();
-      state.userToken = new Map();
+      state.user = {};
+      state.userToken = {};
       state.loading = false;
       state.success = false;
       state.error = false;
       state.message = "";
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase;
   },
 });
 
