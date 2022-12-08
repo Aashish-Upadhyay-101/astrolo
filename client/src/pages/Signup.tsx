@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
+import { AppDispatch } from "../app/store";
+import { signup } from "../features/auth/authSlice";
 import "../Components/Navbar.css";
 import "./Signup.css";
 
 const Signup: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [detail, setDetail] = useState({
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
   const signupSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log("submitted");
+    dispatch(signup(detail));
   };
 
   return (
@@ -36,6 +50,9 @@ const Signup: React.FC = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="username"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, username: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item
@@ -47,6 +64,9 @@ const Signup: React.FC = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="First name"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, first_name: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item
@@ -58,6 +78,9 @@ const Signup: React.FC = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Last name"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, last_name: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item
@@ -67,6 +90,9 @@ const Signup: React.FC = () => {
             <Input
               prefix={<MailOutlined className="site-form-item-icon" />}
               placeholder="email"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, email: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item
@@ -77,6 +103,9 @@ const Signup: React.FC = () => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, password: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item
@@ -89,6 +118,9 @@ const Signup: React.FC = () => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Confirm password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, password2: e.target.value })
+              }
             />
           </Form.Item>
 

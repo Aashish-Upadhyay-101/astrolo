@@ -31,11 +31,11 @@ def get_token_for_user(user):
 class UserRegistrationView(APIView):
     def post(self, request, format=None): 
         serializer = UserRegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token = get_token_for_user(user)
-        return Response({"token": token, "message": "Registration Successful"}, status=status.HTTP_201_CREATED)
-
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.save()
+            token = get_token_for_user(user)
+            return Response({"token": token, "message": "Registration Successful"}, status=status.HTTP_201_CREATED)
+        return Response({"message", serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLoginView(APIView):

@@ -1,5 +1,7 @@
+import { UserAddOutlined } from "@ant-design/icons";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import AuthService from "./authService";
 
 export interface AuthState {
@@ -11,9 +13,11 @@ export interface AuthState {
   message: string | object | any;
 }
 
+const token = JSON.parse(localStorage.getItem("user") || "{}"); // get token from local storage
+
 const initialState: AuthState = {
   user: {},
-  userToken: {},
+  userToken: token ? token : {},
   loading: false,
   success: false,
   error: false,
@@ -27,9 +31,7 @@ export const login = createAsyncThunk(
       return await AuthService.login(userDetail);
     } catch (error: any) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data) ||
         error.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
@@ -38,15 +40,13 @@ export const login = createAsyncThunk(
 );
 
 export const signup = createAsyncThunk(
-  "auth/login",
+  "auth/signup",
   async (userDetail: object, thunkAPI) => {
     try {
       return await AuthService.signup(userDetail);
     } catch (error: any) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data) ||
         error.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
@@ -72,12 +72,15 @@ export const authSlice = createSlice({
       // login
       .addCase(login.pending, (state) => {
         state.loading = true;
-        state.message = "fetching data from server";
+        state.error = false;
+        state.success = false;
+        state.message = "Processing login...";
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.message = "data fetched successfully";
+        state.error = false;
+        state.message = "Login successfully";
         state.userToken = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
@@ -90,12 +93,12 @@ export const authSlice = createSlice({
       // signup
       .addCase(signup.pending, (state) => {
         state.loading = true;
-        state.message = "fetching data from server";
+        state.message = "Processing signup";
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.message = "data fetched successfully";
+        state.message = "Signup successfully";
         state.userToken = action.payload;
       })
       .addCase(signup.rejected, (state, action) => {
