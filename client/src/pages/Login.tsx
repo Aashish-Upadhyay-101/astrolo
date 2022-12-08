@@ -3,17 +3,18 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
+import { login } from "../features/auth/authSlice";
+import { AppDispatch } from "../app/store";
 import "../Components/Navbar.css";
 import "./Login.css";
 
 const Login: React.FC = () => {
   const [detail, setDetail] = useState({ email: "", password: "" });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const loginSubmitHandler = (e: React.FormEvent<HTMLInputElement>): void => {
-    e.preventDefault();
-    console.log(detail);
+  const loginSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    dispatch(login(detail));
   };
 
   return (
@@ -42,6 +43,9 @@ const Login: React.FC = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="email"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, email: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item
@@ -52,6 +56,9 @@ const Login: React.FC = () => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDetail({ ...detail, password: e.target.value })
+              }
             />
           </Form.Item>
           <Form.Item>

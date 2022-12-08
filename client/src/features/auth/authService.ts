@@ -3,7 +3,7 @@ import axios from "axios";
 type EndPoint = string;
 
 const REGISTER: EndPoint = "auth/register/";
-const LOGIN: EndPoint = "auth/login";
+const LOGIN: EndPoint = "auth/login/";
 
 const config = {
   headers: {
@@ -11,13 +11,18 @@ const config = {
   },
 };
 
-const login = async (userDetail: any) => {
+const login = async (userDetail: object): Promise<object> => {
   const response = await axios.post(LOGIN, userDetail, config);
   localStorage.setItem("user", JSON.stringify(response.data));
-  console.log(typeof response.data); // for testing
   return response.data;
 };
 
-const authService = { login };
+const signup = async (userDetail: object): Promise<object> => {
+  const response = await axios.post(REGISTER, userDetail, config);
+  localStorage.setItem("user", JSON.stringify(response.data));
+  return response.data;
+};
+
+const authService = { login, signup };
 
 export default authService;
