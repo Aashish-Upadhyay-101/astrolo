@@ -2,11 +2,13 @@ import { UserAddOutlined } from "@ant-design/icons";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { access } from "fs";
+import { AppDispatch } from "../../app/store";
 import AuthService from "./authService";
 
 export interface AuthState {
-  user: {};
-  userToken: {};
+  accessToken: string;
+  refreshToken: string;
   loading: boolean;
   success: boolean;
   error: boolean;
@@ -16,17 +18,28 @@ export interface AuthState {
 const token = JSON.parse(localStorage.getItem("user") || "{}"); // get token from local storage
 
 const initialState: AuthState = {
-  user: {},
-  userToken: token ? token : {},
+  accessToken: token.accessToken ? token.accessToken : "",
+  refreshToken: token.refreshToken ? token.refreshToken : "",
   loading: false,
   success: false,
   error: false,
   message: "",
 };
 
-export const login = createAsyncThunk(
+interface UserAttributes {
+  email: string;
+  password: string;
+}
+
+export interface ReturnedData {
+  accessToken: string;
+  refreshToken: string;
+  message: string;
+}
+
+export const login = createAsyncThunk<ReturnedData, UserAttributes>(
   "auth/login",
-  async (userDetail: object, thunkAPI) => {
+  async (userDetail, thunkAPI) => {
     try {
       return await AuthService.login(userDetail);
     } catch (error: any) {
@@ -54,13 +67,26 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const requestAccessToken = createAsyncThunk(
+  "auth/accessToken",
+  async (refreshToken: string, thunkAPI) => {
+    try {
+      return await AuthService.requestAccessToken(refreshToken);
+    } catch (error: any) {
+      const message =
+        (error.response && error.response.data) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     reset: (state) => {
-      state.user = {};
-      state.userToken = {};
       state.loading = false;
       state.success = false;
       state.error = false;
@@ -80,14 +106,14 @@ export const authSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.error = false;
-        state.message = "Login successfully";
-        state.userToken = action.payload;
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
+        state.message = action.payload.message;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = true;
-        state.message = action.payload;
       })
 
       // signup
@@ -99,13 +125,13 @@ export const authSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.message = "Signup successfully";
-        state.userToken = action.payload;
+        state.accessToken = action.payload.accessToken;
+        state.message = action.payload.message;
       })
       .addCase(signup.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = true;
-        state.message = action.payload;
       });
   },
 });
