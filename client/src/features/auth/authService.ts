@@ -1,4 +1,5 @@
 import axios from "../../axios/axios";
+import Cookies from "js-cookie";
 import { ReturnedData } from "./authSlice";
 
 type EndPoint = string;
@@ -19,16 +20,6 @@ const signup = async (userDetail: object): Promise<ReturnedData> => {
   return response.data as ReturnedData;
 };
 
-const requestAccessToken = async (refresh: string): Promise<ReturnedData> => {
-  const response = await axios.post(ACCESSTOKENURL, { refresh });
-  const userToken = {
-    accessToken: response.data.access,
-    refreshToken: refresh,
-  };
-  localStorage.setItem("userToken", JSON.stringify(userToken));
-  return response.data;
-};
-
-const authService = { login, signup, requestAccessToken };
+const authService = { login, signup };
 
 export default authService;

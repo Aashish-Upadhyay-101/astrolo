@@ -76,21 +76,6 @@ export const signup = createAsyncThunk<ReturnedData, UserAttributes>(
   }
 );
 
-export const requestAccessToken = createAsyncThunk(
-  "auth/accessToken",
-  async (refreshToken: string, thunkAPI) => {
-    try {
-      return await AuthService.requestAccessToken(refreshToken);
-    } catch (error: any) {
-      const message =
-        (error.response && error.response.data) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -138,26 +123,6 @@ export const authSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(signup.rejected, (state) => {
-        state.loading = false;
-        state.success = false;
-        state.error = true;
-      })
-
-      // request access token
-      .addCase(requestAccessToken.pending, (state) => {
-        state.loading = true;
-        state.success = false;
-        state.error = false;
-        state.message = "Requesting access token";
-      })
-      .addCase(requestAccessToken.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.error = false;
-        state.accessToken = action.payload.accessToken;
-        state.message = action.payload.message;
-      })
-      .addCase(requestAccessToken.rejected, (state) => {
         state.loading = false;
         state.success = false;
         state.error = true;

@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { requestAccessToken } from "../features/auth/authSlice";
 
 export interface authInterface {
   accessToken: string;
@@ -16,9 +15,7 @@ const AstroloHome: React.FC = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleClick = () => {
-    dispatch(requestAccessToken(auth.refreshToken));
-  };
+  const handleClick = () => {};
   return (
     <h1 className="text-2">
       Hello User!
