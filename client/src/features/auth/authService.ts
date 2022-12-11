@@ -25,11 +25,11 @@ const signup = async (userDetail: object): Promise<ReturnedData> => {
   return response.data as ReturnedData;
 };
 
-const requestAccessToken = async (refreshToken: string): Promise<string> => {
-  const response = await axios.post(ACCESSTOKENURL, { refreshToken }, config);
+const requestAccessToken = async (refresh: string): Promise<ReturnedData> => {
+  const response = await axios.post(ACCESSTOKENURL, { refresh }, config);
   const userToken = {
-    accessToken: response.data,
-    refreshToken: refreshToken,
+    accessToken: response.data.access,
+    refreshToken: refresh,
   };
   localStorage.setItem("userToken", JSON.stringify(userToken));
   return response.data;

@@ -1,9 +1,4 @@
-import { UserAddOutlined } from "@ant-design/icons";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { access } from "fs";
-import { AppDispatch } from "../../app/store";
 import AuthService from "./authService";
 
 export interface AuthState {
@@ -27,14 +22,26 @@ const initialState: AuthState = {
 };
 
 interface UserAttributes {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
   email: string;
   password: string;
+  password2?: string;
 }
 
 export interface ReturnedData {
   accessToken: string;
   refreshToken: string;
   message: string;
+}
+
+export interface TokenReturnData {
+  accessToken: string;
+}
+
+export interface TokenUserAttributes {
+  refresh: string;
 }
 
 export const login = createAsyncThunk<ReturnedData, UserAttributes>(
@@ -52,7 +59,7 @@ export const login = createAsyncThunk<ReturnedData, UserAttributes>(
   }
 );
 
-export const signup = createAsyncThunk(
+export const signup = createAsyncThunk<ReturnedData, UserAttributes>(
   "auth/signup",
   async (userDetail: object, thunkAPI) => {
     try {
@@ -110,7 +117,7 @@ export const authSlice = createSlice({
         state.refreshToken = action.payload.refreshToken;
         state.message = action.payload.message;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state) => {
         state.loading = false;
         state.success = false;
         state.error = true;
@@ -124,11 +131,31 @@ export const authSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.message = "Signup successfully";
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
+        state.message = action.payload.message;
+      })
+      .addCase(signup.rejected, (state) => {
+        state.loading = false;
+        state.success = false;
+        state.error = true;
+      })
+
+      // request access token
+      .addCase(requestAccessToken.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.error = false;
+        state.message = "Requesting access token";
+      })
+      .addCase(requestAccessToken.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = false;
         state.accessToken = action.payload.accessToken;
         state.message = action.payload.message;
       })
-      .addCase(signup.rejected, (state, action) => {
+      .addCase(requestAccessToken.rejected, (state) => {
         state.loading = false;
         state.success = false;
         state.error = true;
