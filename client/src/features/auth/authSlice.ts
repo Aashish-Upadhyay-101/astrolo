@@ -11,10 +11,12 @@ export interface AuthState {
 }
 
 const token = JSON.parse(localStorage.getItem("user") || "{}"); // get token from local storage
+const accessToken = token.accessToken;
+const refreshToken = token.refreshToken;
 
 const initialState: AuthState = {
-  accessToken: token.accessToken ? token.accessToken : "",
-  refreshToken: token.refreshToken ? token.refreshToken : "",
+  accessToken: accessToken ? accessToken : "",
+  refreshToken: refreshToken ? refreshToken : "",
   loading: false,
   success: false,
   error: false,
