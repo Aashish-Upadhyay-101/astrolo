@@ -1,13 +1,11 @@
 import { axiosPrivate } from "../axios/axios";
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
 import useRefreshToken from "./useRefreshToken";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 const useAxiosPrivate = () => {
   const auth = useSelector((state) => state.auth);
-  const refresh = useRefreshToken({ refresh: Cookies.get("refresh") });
+  const refresh = useRefreshToken({ refresh: auth.refreshToken });
 
   useEffect(() => {
     // request interceptor
@@ -26,7 +24,7 @@ const useAxiosPrivate = () => {
       (response) => response,
       async (error) => {
         const prevRequest = error?.config;
-        if (error?.response?.status === 403 && !prevRequest?.sent) {
+        if (error?.response?.status == 401 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newAccessToken = await refresh();
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;

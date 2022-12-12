@@ -5,18 +5,17 @@ type EndPoint = string;
 
 const REGISTER: EndPoint = "auth/register/";
 const LOGIN: EndPoint = "auth/login/";
-const ACCESSTOKENURL: EndPoint = "token/refresh/";
 
 const login = async (userDetail: object): Promise<ReturnedData> => {
   const response = await axios.post(LOGIN, userDetail);
   localStorage.setItem("userToken", JSON.stringify(response.data));
-  return response.data as ReturnedData;
+  return response.data;
 };
 
 const signup = async (userDetail: object): Promise<ReturnedData> => {
   const response = await axios.post(REGISTER, userDetail);
   localStorage.setItem("userToken", JSON.stringify(response.data));
-  return response.data as ReturnedData;
+  return response.data;
 };
 
 const authService = { login, signup };

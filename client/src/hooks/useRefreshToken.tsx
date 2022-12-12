@@ -1,16 +1,26 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AppDispatch } from "../app/store";
+import { AppDispatch, RootState } from "../app/store";
 import { setAccessToken } from "../features/auth/authSlice";
 
-const useRefreshToken = (refreshToken: object) => {
+const useRefreshToken = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const refreshToken = useSelector<RootState>(
+    (state) => state.auth.refreshToken
+  );
 
   const refresh = async () => {
     const response = await axios.post(
       "http://127.0.0.1:8000/api/token/refresh/",
-      refreshToken
+      {
+        refresh: refreshToken,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     const accessToken = response.data.access;

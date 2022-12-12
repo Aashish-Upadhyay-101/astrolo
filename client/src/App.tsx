@@ -4,6 +4,7 @@ import ActivateAccount from "./pages/ActivateAccount";
 import AstroloHome from "./pages/AstroloHome";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
 import Signup from "./pages/Signup";
 
 const App: React.FC = () => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/activate-account" element={<ActivateAccount />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

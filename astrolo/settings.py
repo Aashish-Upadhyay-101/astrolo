@@ -159,18 +159,10 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CSRF_TRUSTED_ORIGINS = ['chrome-extension://aicmkgpgakddgnaphhhpliifpcfhicfo', "http://localhost:3000", "http://127.0.0.1:3000"]
 CORS_ALLOW_ALL_ORIGINS = True 
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
 
 # JWT Settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
 
     'AUTH_HEADER_TYPES': ('Bearer',),
@@ -185,12 +177,6 @@ SIMPLE_JWT = {
 
     'JTI_CLAIM': 'jti',
 }
-
-# cookie settings 
-SESSION_COOKIE_DOMAIN = "http://localhost:3000"
-SESSION_COOKIE_HTTPONLY = True 
-SESSION_COOKIE_SAMESITE = None 
-
 
 # email service
 EMAIL_BACKEND = env("EMAIL_BACKEND")

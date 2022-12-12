@@ -10,7 +10,7 @@ export interface AuthState {
   message: string | object | any;
 }
 
-const token = JSON.parse(localStorage.getItem("user") || "{}"); // get token from local storage
+const token = JSON.parse(localStorage.getItem("userToken") || "{}"); // get token from local storage
 const accessToken = token.accessToken;
 const refreshToken = token.refreshToken;
 

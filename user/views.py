@@ -44,7 +44,7 @@ class UserRegistrationView(APIView):
             response.set_cookie(
                 key="refresh", 
                 value=token.get("refresh"), 
-                httponly=False, 
+                httponly=True, 
                 secure=False,
                 expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME']
             )
@@ -77,7 +77,7 @@ class UserLoginView(APIView):
             response.set_cookie(
                 key="refresh", 
                 value=token.get("refresh"), 
-                httponly=False, 
+                httponly=True, 
                 secure=False,
                 expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME']
             )
@@ -144,3 +144,5 @@ class VerifyAndActivateAccount(APIView):
         user.is_active = True
         user.save()
         return Response({"message": "Credentials Valid", "uid": uid, "token": token}, status=status.HTTP_200_OK)
+
+
