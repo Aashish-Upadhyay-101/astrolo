@@ -12,10 +12,9 @@ export interface authInterface {
 }
 
 const AstroloHome: React.FC = () => {
-  const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleClick = () => {};
+  const handleClick = async () => {
+    console.log("clicked");
+  };
   return (
     <h1 className="text-2">
       Hello User!

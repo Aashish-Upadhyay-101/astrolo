@@ -44,7 +44,7 @@ class UserRegistrationView(APIView):
             response.set_cookie(
                 key="refresh", 
                 value=token.get("refresh"), 
-                httponly=True, 
+                httponly=False, 
                 secure=False,
                 expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME']
             )
@@ -77,7 +77,7 @@ class UserLoginView(APIView):
             response.set_cookie(
                 key="refresh", 
                 value=token.get("refresh"), 
-                httponly=True, 
+                httponly=False, 
                 secure=False,
                 expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME']
             )

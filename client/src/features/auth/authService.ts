@@ -1,5 +1,4 @@
 import axios from "../../axios/axios";
-import Cookies from "js-cookie";
 import { ReturnedData } from "./authSlice";
 
 type EndPoint = string;

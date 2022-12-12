@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AuthService from "./authService";
 
 export interface AuthState {
@@ -86,6 +86,9 @@ export const authSlice = createSlice({
       state.error = false;
       state.message = "";
     },
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload.accessToken;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -130,5 +133,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, setAccessToken } = authSlice.actions;
 export default authSlice.reducer;
