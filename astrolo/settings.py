@@ -162,7 +162,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # JWT Settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
 
     'AUTH_HEADER_TYPES': ('Bearer',),

@@ -108,6 +108,7 @@ class ActivateAccount(APIView):
         except User.DoesNotExist:
             raise UserNotFound
         
+        print(username) # testing
         user_id = str(user.id).encode()
         uid = urlsafe_base64_encode(user_id)
         token = PasswordResetTokenGenerator().make_token(user)

@@ -1,29 +1,19 @@
-import React, { useState } from "react";
-import {
-  FieldNumberOutlined,
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import React from "react";
 import "../Components/Navbar.css";
 import "./ActivateAccount.css";
+import { Link } from "react-router-dom";
 
 const ActivateAccount: React.FC = () => {
-  const [detail, setDetail] = useState({ email: "", password: "" });
-
-  const activateAccountSubmitHandler = (
-    e: React.FormEvent<HTMLInputElement>
-  ): void => {
-    e.preventDefault();
-    console.log(detail);
-  };
+  const username = localStorage.getItem("username") || "";
 
   return (
     <section className="section-login">
       <nav className="navbar">
         <div className="navbar-brand">
           <h1 className="text-2">
-            Astrol<span className="text-color-primary">o</span>
+            <Link to="/">
+              Astrol<span className="text-color-primary">o</span>
+            </Link>
           </h1>
         </div>
       </nav>
@@ -37,16 +27,16 @@ const ActivateAccount: React.FC = () => {
         }}
         className="activate"
       >
-        <h1 className="text-2">Activate Verification</h1>
+        <h1 className="text-2">Activate Activation</h1>
 
         <p
           style={{ fontSize: "1.6rem", marginTop: "2.4rem", lineHeight: "1.7" }}
         >
-          A 6 digit code has been sent to your email address. Please Enter the
-          code in the input form below and activate your account.
+          A activation link has been sent to your email address. Please click
+          the link and activate your account.
         </p>
 
-        <Form
+        {/* <Form
           name="Activate account form"
           className="ant-design-form"
           onFinish={activateAccountSubmitHandler}
@@ -71,7 +61,7 @@ const ActivateAccount: React.FC = () => {
               Activate
             </Button>
           </Form.Item>
-        </Form>
+        </Form> */}
       </div>
     </section>
   );

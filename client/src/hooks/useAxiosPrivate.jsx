@@ -2,17 +2,20 @@ import { axiosPrivate } from "../axios/axios";
 import React, { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../app/store";
 
 const useAxiosPrivate = () => {
-  const auth = useSelector((state) => state.auth);
-  const refresh = useRefreshToken({ refresh: auth.refreshToken });
+  const navigate = useNavigate();
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const refresh = useRefreshToken();
 
   useEffect(() => {
     // request interceptor
     const requestInterceptor = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth.accessToken}`;
+          config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
         return config;
       },
@@ -30,6 +33,8 @@ const useAxiosPrivate = () => {
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosPrivate(prevRequest);
         }
+
+        navigate("/login");
         return Promise.reject(error);
       }
     );
@@ -38,7 +43,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestInterceptor);
       axiosPrivate.interceptors.response.eject(responseInterceptor);
     };
-  }, [auth, refresh]);
+  }, [accessToken, refresh]);
 
   return axiosPrivate;
 };

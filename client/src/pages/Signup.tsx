@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { AppDispatch } from "../app/store";
 import { signup } from "../features/auth/authSlice";
 import "../Components/Navbar.css";
@@ -10,6 +10,7 @@ import "./Signup.css";
 
 const Signup: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const [detail, setDetail] = useState({
     username: "",
