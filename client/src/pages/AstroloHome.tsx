@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const AstroloHome = () => {
   return (
