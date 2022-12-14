@@ -1,8 +1,4 @@
-import { ProfileFilled } from "@ant-design/icons";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AppDispatch, RootState } from "../app/store";
+import React from "react";
 
 const AstroloHome = () => {
   return (

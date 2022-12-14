@@ -10,7 +10,10 @@ import "./Login.css";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [detail, setDetail] = useState({ email: "", password: "" });
+  const [detail, setDetail] = useState({
+    email: "",
+    password: "",
+  });
   const auth = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch<AppDispatch>();
