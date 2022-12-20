@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
-// import { login } from "../features/auth/authSlice";
-import { AppDispatch, RootState } from "../app/store";
+import { useLoginUserMutation } from "../api/authApi";
 import "../Components/Navbar.css";
 import "./Login.css";
+
+// signup page just like this
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -14,15 +14,22 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-  const auth = useSelector((state: RootState) => state.auth);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const [LoginUser, { isLoading, isSuccess, isError, error }] =
+    useLoginUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("login successfull");
+      navigate("/astrolo");
+    }
+    if (isError) {
+      console.log(error);
+    }
+  }, [isLoading]);
 
   const loginSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    // dispatch(login(detail));
-    setTimeout(() => {
-      navigate("/astrolo");
-    }, 500);
+    LoginUser(detail);
   };
 
   return (

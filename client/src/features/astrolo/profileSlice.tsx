@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserType } from "../../api/types";
 
 interface User {
-  user: UserType | null;
+  profile: UserType | null;
 }
 
 const initialState: User = {
-  user: null,
+  profile: null,
 };
 
 export const profileSlice = createSlice({
@@ -14,7 +14,7 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setUserProfile: (state, action: PayloadAction<UserType>) => {
-      state.user = action.payload;
+      state.profile = action.payload;
     },
   },
 });

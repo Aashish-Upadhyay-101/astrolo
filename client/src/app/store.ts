@@ -1,7 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { authApi } from "../api/authApi";
+import { userApi } from "../api/userApi";
+import authReducer from "../features/auth/authSlice";
+import profileReducer from "../features/astrolo/profileSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    authState: authReducer,
+    profileState: profileReducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
+  },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({}).concat([userApi.middleware, authApi.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -3,26 +3,22 @@ import {
   UserTokenResponse,
   RegisterUserFieldType,
   LoginUserType,
-  UserType,
 } from "./types";
+import { userApi } from "./userApi";
+import { setToken } from "../features/auth/authSlice";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT as string;
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}/`,
+    baseUrl: `${BASE_URL}/auth/`,
   }),
   endpoints: (builder) => ({
-    getMe: builder.mutation<UserType, null>({
-      query: () => `profile/me/`,
-      transformResponse: (result: { data: { user: UserType } }) =>
-        result.data.user,
-    }),
     registerUser: builder.mutation<UserTokenResponse, RegisterUserFieldType>({
       query(data) {
         return {
-          url: "auth/register/",
+          url: "register/",
           method: "POST",
           body: data,
         };
@@ -31,13 +27,21 @@ export const authApi = createApi({
     loginUser: builder.mutation<UserTokenResponse, LoginUserType>({
       query(data) {
         return {
-          url: "auth/login/",
+          url: "login/",
           method: "POST",
           body: data,
           credentials: "include",
         };
       },
-      // on this query started I want another query to be fired at the same time i.e get the logged in user.
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setToken(data));
+          await dispatch(userApi.endpoints.getMe.initiate(data.accessToken));
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
     sendVerificationEmail: builder.query<void, string>({
       query: (username) => `auth/activate-link/${username}/`,
@@ -45,7 +49,7 @@ export const authApi = createApi({
     logoutUser: builder.mutation<void, void>({
       query() {
         return {
-          url: "auth/logout/",
+          url: "logout/",
           credentials: "include",
         };
       },
