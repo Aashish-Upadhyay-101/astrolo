@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
-import { login } from "../features/auth/authSlice";
+// import { login } from "../features/auth/authSlice";
 import { AppDispatch, RootState } from "../app/store";
 import "../Components/Navbar.css";
 import "./Login.css";
@@ -19,7 +19,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const loginSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    dispatch(login(detail));
+    // dispatch(login(detail));
     setTimeout(() => {
       navigate("/astrolo");
     }, 500);

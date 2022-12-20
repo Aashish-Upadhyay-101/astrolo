@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { AppDispatch } from "../app/store";
-import { signup } from "../features/auth/authSlice";
+// import { signup } from "../features/auth/authSlice";
 import "../Components/Navbar.css";
 import "./Signup.css";
 
@@ -22,7 +22,7 @@ const Signup: React.FC = () => {
   });
 
   const signupSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    dispatch(signup(detail));
+    // dispatch(signup(detail));
   };
 
   return (
