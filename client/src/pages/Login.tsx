@@ -20,7 +20,6 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log("login successfull");
       navigate("/astrolo");
     }
     if (isError) {
