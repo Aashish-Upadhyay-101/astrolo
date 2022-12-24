@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { AppDispatch } from "../app/store";
-// import { signup } from "../features/auth/authSlice";
+import {
+  useRegisterUserMutation,
+  useSendVerificationEmailQuery,
+} from "../api/authApi";
 import "../Components/Navbar.css";
 import "./Signup.css";
+import { stringify } from "querystring";
 
 const Signup: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
+  const [SigupUser, { isLoading, isSuccess, isError, error }] =
+    useRegisterUserMutation();
+
+  // const [SendVerificationEmail, ...{}] = useSendVerificationEmailQuery();
 
   const [detail, setDetail] = useState({
     username: "",
@@ -22,7 +28,10 @@ const Signup: React.FC = () => {
   });
 
   const signupSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    // dispatch(signup(detail));
+    SigupUser(detail);
+    if (isSuccess) {
+      // SendVerificationEmail();
+    }
   };
 
   return (

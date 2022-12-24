@@ -34,11 +34,12 @@ class UserRegistrationView(APIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             token = get_token_for_user(user)
-            return Response({
-                "access": token.get('access'), 
-                "refresh": token.get("refresh"), 
-                "message": "User registered successfully" 
-            }, status=status.HTTP_201_CREATED)
+            response = Response()
+            response.set_cookie(key="access", value=token.get("access"), httponly=True, expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'])
+            response.set_cookie(key="refresh", value=token.get("refresh"), httponly=True, expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'])
+            response.data = {"message": "login successfull"}
+            response.status_code = 201
+            return response
         return Response({"message", serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -51,11 +52,12 @@ class UserLoginView(APIView):
         user = authenticate(email=email, password=password)
         if user is not None:
             token = get_token_for_user(user)
-            return Response({
-                "access": token.get('access'), 
-                "refresh": token.get("refresh"), 
-                "message": "User login successfully" 
-            }, status=status.HTTP_200_OK)
+            response = Response()
+            response.set_cookie(key="access", value=token.get("access"), httponly=True, expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'])
+            response.set_cookie(key="refresh", value=token.get("refresh"), httponly=True, expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'])
+            response.data = {"message": "login successfull"}
+            response.status_code = 200
+            return response 
         else:
             return Response({"error": "Invalid username or password"}, status=status.HTTP_404_NOT_FOUND)
             
