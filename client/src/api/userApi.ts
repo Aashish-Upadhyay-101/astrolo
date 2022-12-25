@@ -4,26 +4,20 @@ import { setUserProfile } from "../features/astrolo/profileSlice";
 import { getAccessToken } from "../helpers/localStorageHandler";
 import { authApi } from "./authApi";
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT as string;
-
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}/profile/`,
-    prepareHeaders(headers, api) {
-      const token = getAccessToken();
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
+    baseUrl: `profile/`,
   }),
   endpoints: (builder) => ({
-    getMe: builder.mutation<UserType, null>({
-      query() {
+    getMe: builder.mutation<UserType, string>({
+      query(accessToken) {
         return {
           method: "GET",
           url: "me/",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         };
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {

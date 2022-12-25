@@ -1,7 +1,7 @@
 export interface UserTokenResponse {
-  accessToken: string;
-  refreshToken: string;
-  message: string;
+  access: string;
+  refresh: string;
+  message?: string;
 }
 
 export interface UserType {

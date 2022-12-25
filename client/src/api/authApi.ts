@@ -7,15 +7,11 @@ import {
 import { userApi } from "./userApi";
 import { setToken } from "../features/auth/authSlice";
 import { setTokenLocal } from "../helpers/localStorageHandler";
-import { store } from "../app/store";
-
-// const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT as string;
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "auth/",
-    // baseUrl: `${BASE_URL}/auth/`,
   }),
   endpoints: (builder) => ({
     registerUser: builder.mutation<UserTokenResponse, RegisterUserFieldType>({
@@ -25,21 +21,6 @@ export const authApi = createApi({
           method: "POST",
           body: data,
         };
-      },
-      async onQueryStarted(args, { dispatch, queryFulfilled, getState }) {
-        try {
-          const { data } = await queryFulfilled;
-
-          dispatch(setToken(data));
-          setTokenLocal(JSON.stringify(data));
-          await dispatch(userApi.endpoints.getMe.initiate(null));
-          const username = store.getState().profileState.profile?.user.username;
-          await dispatch(
-            authApi.endpoints.sendVerificationEmail.initiate(username || "") // send verification email just after registering
-          );
-        } catch (error) {
-          console.log(error);
-        }
       },
     }),
     loginUser: builder.mutation<UserTokenResponse, LoginUserType>({
@@ -55,7 +36,7 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setToken(data));
           setTokenLocal(JSON.stringify(data));
-          await dispatch(userApi.endpoints.getMe.initiate(null));
+          await dispatch(userApi.endpoints.getMe.initiate(data.access));
         } catch (error) {
           console.log(error);
         }

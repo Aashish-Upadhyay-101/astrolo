@@ -11,8 +11,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.exceptions import InvalidToken
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+
 from common.serializers import UserModelSerializer
-from common.exceptions import UserNotFound, VerificationCodeExpires
+from common.exceptions import UserNotFound
 from .serializers import UserLoginSerializer, UserRegisterSerializer
 
 
@@ -35,9 +39,7 @@ class UserRegistrationView(APIView):
             user = serializer.save()
             token = get_token_for_user(user)
             response = Response()
-            response.set_cookie(key="access", value=token.get("access"), httponly=True, expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'])
-            response.set_cookie(key="refresh", value=token.get("refresh"), httponly=True, expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'])
-            response.data = {"message": "login successfull"}
+            response.data = {"message": "Signup successfull", "access": token.get("access"), "refresh": token.get("refresh")}
             response.status_code = 201
             return response
         return Response({"message", serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -53,9 +55,7 @@ class UserLoginView(APIView):
         if user is not None:
             token = get_token_for_user(user)
             response = Response()
-            response.set_cookie(key="access", value=token.get("access"), httponly=True, expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'])
-            response.set_cookie(key="refresh", value=token.get("refresh"), httponly=True, expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'])
-            response.data = {"message": "login successfull"}
+            response.data = {"message": "login successfull", "access": token.get("access"), "refresh": token.get("refresh")}
             response.status_code = 200
             return response 
         else:
@@ -77,7 +77,6 @@ class ActivateAccount(APIView):
         except User.DoesNotExist:
             raise UserNotFound
         
-        print(username) # testing
         user_id = str(user.id).encode()
         uid = urlsafe_base64_encode(user_id)
         token = PasswordResetTokenGenerator().make_token(user)

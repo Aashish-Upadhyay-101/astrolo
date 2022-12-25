@@ -1,12 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserTokenResponse } from "../../api/types";
+import {
+  getAccessToken,
+  getRefreshToken,
+} from "../../helpers/localStorageHandler";
+
+const accessToken = getAccessToken();
+const refreshToken = getRefreshToken();
 
 interface Token {
   token: UserTokenResponse | null;
 }
 
 const initialState: Token = {
-  token: null,
+  token: {
+    access: accessToken ? accessToken : "",
+    refresh: refreshToken ? refreshToken : "",
+  },
 };
 
 export const authSlice = createSlice({
