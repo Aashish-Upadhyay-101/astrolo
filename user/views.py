@@ -73,7 +73,9 @@ class UserProfileView(APIView):
 class ActivateAccount(APIView):
     def get(self, request, username, format=None):
         try:
+            print(username)
             user = User.objects.get(username=username)
+            print(user)
         except User.DoesNotExist:
             raise UserNotFound
         
@@ -110,8 +112,7 @@ class VerifyAndActivateAccount(APIView):
         if not PasswordResetTokenGenerator().check_token(user,token):
             return Response({"message": "Token is invalid, please request another one"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        user.is_active = True
+        user.is_verified = True
         user.save()
         return Response({"message": "Credentials Valid", "uid": uid, "token": token}, status=status.HTTP_200_OK)
-
 

@@ -4,19 +4,19 @@ import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import {
   useRegisterUserMutation,
-  useSendVerificationEmailQuery,
+  useSendVerificationEmailMutation,
 } from "../api/authApi";
 import "../Components/Navbar.css";
 import "./Signup.css";
-import { stringify } from "querystring";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
 
-  const [SigupUser, { isLoading, isSuccess, isError, error }] =
+  const [SigupUser, { isError: isErrorSignup, error: errorSignup }] =
     useRegisterUserMutation();
 
-  // const [SendVerificationEmail, ...{}] = useSendVerificationEmailQuery();
+  const [SendVerificationEmail, { isError: isErrorSendVerificationEmail }] =
+    useSendVerificationEmailMutation();
 
   const [detail, setDetail] = useState({
     username: "",
@@ -27,10 +27,14 @@ const Signup: React.FC = () => {
     password2: "",
   });
 
-  const signupSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    SigupUser(detail);
-    if (isSuccess) {
-      // SendVerificationEmail();
+  const signupSubmitHandler = async (e: React.FormEvent<HTMLInputElement>) => {
+    await SigupUser(detail);
+    if (!isErrorSignup) {
+      await SendVerificationEmail(detail.username);
+    }
+
+    if (!isErrorSendVerificationEmail) {
+      navigate(`/auth/activate-link/${detail.username}`);
     }
   };
 

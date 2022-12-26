@@ -42,14 +42,13 @@ export const authApi = createApi({
         }
       },
     }),
-    sendVerificationEmail: builder.query<void, string>({
-      query: (username) => `auth/activate-link/${username}/`,
+    sendVerificationEmail: builder.mutation<void, string>({
+      query: (username) => `activate-link/${username}/`,
     }),
     logoutUser: builder.mutation<void, void>({
       query() {
         return {
           url: "logout/",
-          credentials: "include",
         };
       },
     }),
@@ -60,5 +59,5 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation,
   useRegisterUserMutation,
-  useSendVerificationEmailQuery,
+  useSendVerificationEmailMutation,
 } = authApi;

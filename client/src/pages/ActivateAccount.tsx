@@ -1,11 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../Components/Navbar.css";
 import "./ActivateAccount.css";
-import { Link } from "react-router-dom";
 
 const ActivateAccount: React.FC = () => {
-  const username = localStorage.getItem("username") || "";
-
   return (
     <section className="section-login">
       <nav className="navbar">

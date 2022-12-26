@@ -16,7 +16,10 @@ const App: React.FC = () => {
           <Route path="/astrolo" element={<AstroloHome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/activate-account" element={<ActivateAccount />} />
+          <Route
+            path="/auth/activate-link/:username"
+            element={<ActivateAccount />}
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
