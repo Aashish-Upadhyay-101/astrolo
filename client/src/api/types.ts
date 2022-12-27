@@ -22,6 +22,8 @@ export interface UserType {
   profile_picture: string;
   profile_intro_video: string;
   profile_type: string;
+  num_of_reviews: number;
+  rating: number;
 }
 
 export interface RegisterUserFieldType {

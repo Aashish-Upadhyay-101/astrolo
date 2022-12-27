@@ -24,10 +24,15 @@ const AstrologerItem = ({
           </p>
           <div className="rating-box">
             <Rate
+              allowHalf
               disabled
-              defaultValue={rating}
+              defaultValue={1}
+              count={1}
               className="astrologerItem__upper-rate"
             />
+            <span>
+              <strong>{rating}</strong>
+            </span>
             <span>({num_of_reviews})</span>
           </div>
         </div>
