@@ -110,5 +110,5 @@ class AstrologerProfileListAPIView(APIView):
     def get(self, request, *args, **kwargs):
         profiles = Profile.objects.filter(profile_type="Astrologer")
         serializer = ProfileSerializer(instance=profiles, many=True)
-        return Response({"profiles": serializer.data})
+        return Response(serializer.data)
 

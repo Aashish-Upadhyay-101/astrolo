@@ -1,23 +1,38 @@
 import React, { useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import { useGetAllAstrologersMutation } from "../api/userApi";
+import { useGetAllAstrologersQuery } from "../api/userApi";
 import { getAccessToken } from "../helpers/localStorageHandler";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import AstrologerItem from "../Components/AstrologerItem";
+import "./AstroloHome.css";
 
 const AstroloHome = () => {
-  const [GetAllAstrolgoer] = useGetAllAstrologersMutation();
-  const profiles = useSelector<RootState>((state) => state.userApi.mutations);
+  const { data, error, isError, isLoading, isSuccess } =
+    useGetAllAstrologersQuery(getAccessToken());
 
   useEffect(() => {
-    GetAllAstrolgoer(getAccessToken());
-    console.log(profiles);
-  }, []);
+    console.log(data);
+  }, [data]);
 
   return (
     <>
       <Navbar />
-      <p>List of astrologer profiles</p>
+      {/* {data?.map((astrologer) => (
+        <AstrologerItem key={astrologer.user.id} />
+        ))} */}
+      <div className="container">
+        <div className="astrologer__container">
+          <AstrologerItem
+            profile_picture="https://random.imagecdn.app/500/500"
+            city="Hetauda"
+            country="Nepal"
+            first_name="Aashish"
+            last_name="Upadhyay"
+            num_of_reviews={12}
+            rating={3}
+            price={19.99}
+          />
+        </div>
+      </div>
     </>
   );
 };

@@ -30,7 +30,7 @@ export const userApi = createApi({
         }
       },
     }),
-    getAllAstrologers: builder.mutation<UserType, void>({
+    getAllAstrologers: builder.query<[UserType], void>({
       query(accessToken) {
         return {
           method: "GET",
@@ -44,4 +44,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useGetMeMutation, useGetAllAstrologersMutation } = userApi;
+export const { useGetMeMutation, useGetAllAstrologersQuery } = userApi;

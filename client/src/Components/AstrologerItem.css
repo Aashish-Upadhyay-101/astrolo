@@ -1,0 +1,61 @@
+.astrologerItem {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.astrologerItem__upper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.astrologerItem__upper-image {
+  width: 9.6rem;
+  border-radius: 100rem;
+}
+
+.astrologerItem__upper-name {
+  margin-top: 1.2rem;
+}
+
+.astrologerItem__upper-rate {
+  font-size: 1.6rem;
+  margin-top: 1.2rem;
+  word-spacing: -20px;
+}
+
+.rating-box {
+  margin-left: 0.6rem;
+  text-align: center;
+}
+
+.rating-box > span {
+  margin-left: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.astrologerItem__lower {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.astrologerItem__lower-detail {
+  font-size: 1.4rem;
+}
+
+.astrologerItem__lower-detail-bottom-fortunes {
+  color: var(--text-color-2);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.astroloterItem__lower-detail-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

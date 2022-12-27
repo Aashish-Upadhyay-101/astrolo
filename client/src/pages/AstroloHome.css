@@ -1,0 +1,6 @@
+.astrologer__container {
+  margin-top: 9.6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 5.2rem;
+}
