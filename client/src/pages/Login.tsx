@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import { useLoginUserMutation } from "../api/authApi";
 import "../Components/Navbar.css";
 import "./Login.css";
@@ -18,14 +18,26 @@ const Login: React.FC = () => {
   const [LoginUser, { isLoading, isSuccess, isError, error }] =
     useLoginUserMutation();
 
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const loginError = () => {
+    console.log(error);
+
+    messageApi.open({
+      type: "error",
+      content: "Invalid email or password",
+    });
+  };
+
   useEffect(() => {
     if (isSuccess) {
       navigate("/astrolo");
     }
     if (isError) {
       console.log(error);
+      loginError();
     }
-  }, [isLoading]);
+  }, [isLoading, isError, isSuccess]);
 
   const loginSubmitHandler = (e: React.FormEvent<HTMLInputElement>) => {
     LoginUser(detail);
@@ -33,6 +45,7 @@ const Login: React.FC = () => {
 
   return (
     <section className="section-login">
+      {contextHolder}
       <nav className="navbar">
         <div className="navbar-brand">
           <h1 className="text-2">
