@@ -3,6 +3,7 @@ import { UserType } from "./types";
 import { setUserProfile } from "../features/astrolo/profileSlice";
 import { getAccessToken } from "../helpers/localStorageHandler";
 import { authApi } from "./authApi";
+import { buildQueries } from "@testing-library/react";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -29,7 +30,18 @@ export const userApi = createApi({
         }
       },
     }),
+    getAllAstrologers: builder.mutation<UserType, void>({
+      query(accessToken) {
+        return {
+          method: "GET",
+          url: "astrologers/",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetMeMutation } = userApi;
+export const { useGetMeMutation, useGetAllAstrologersMutation } = userApi;

@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.response import Response 
 from rest_framework.permissions import IsAuthenticated
@@ -105,6 +106,9 @@ class AstrologerReviewAPIView(APIView):
         return Response({"Review Added"}, status=status.HTTP_201_CREATED)
 
 
-
-        
+class AstrologerProfileListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        profiles = Profile.objects.filter(profile_type="Astrologer")
+        serializer = ProfileSerializer(instance=profiles, many=True)
+        return Response({"profiles": serializer.data})
 

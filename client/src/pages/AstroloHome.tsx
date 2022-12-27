@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../Components/Navbar";
+import { useGetAllAstrologersMutation } from "../api/userApi";
+import { getAccessToken } from "../helpers/localStorageHandler";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 const AstroloHome = () => {
+  const [GetAllAstrolgoer] = useGetAllAstrologersMutation();
+  const profiles = useSelector<RootState>((state) => state.userApi.mutations);
+
+  useEffect(() => {
+    GetAllAstrolgoer(getAccessToken());
+    console.log(profiles);
+  }, []);
+
   return (
     <>
       <Navbar />
-      <h1 className="text-4">Astrolo home</h1>
+      <p>List of astrologer profiles</p>
     </>
   );
 };

@@ -2,13 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { Avatar, Dropdown, MenuProps, Badge, Tooltip } from "antd";
+import { Avatar, Dropdown, MenuProps, Badge, Tooltip, Input } from "antd";
 import { useGetMeMutation } from "../api/userApi";
 import {
   BellOutlined,
   HeartOutlined,
   MessageOutlined,
   SearchOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import "./Navbar.css";
 
@@ -44,13 +45,13 @@ const Navbar: React.FC = () => {
       </div>
 
       {token !== "" && (
-        <div className="navbar__search">
-          <input
-            className="navbar__search-input"
-            placeholder="search astrologers"
-          />
-          <SearchOutlined className="normal-icon" />
-        </div>
+        <Input
+          className="navbar__search"
+          suffix={
+            <SearchOutlined className="site-form-item-icon normal-icon" />
+          }
+          placeholder="Search Astrologers"
+        />
       )}
 
       <ul className="navbar__right text-1">
@@ -71,18 +72,18 @@ const Navbar: React.FC = () => {
               </li>
             </Tooltip>
             <li className="navbar__right-link">
-              <Badge count={4}>
+              <Badge count={4} size="small">
                 <MessageOutlined className="normal-icon" />
               </Badge>
             </li>
             <li className="navbar__right-link">
-              <Badge count={4}>
+              <Badge count={4} size="small">
                 <BellOutlined className="normal-icon" />
               </Badge>
             </li>
             <li className="navbar__right-link">
               <Dropdown menu={{ items }} placement="bottomRight" arrow>
-                <Avatar size={36} className="avatar" shape="square">
+                <Avatar size={32} className="avatar" shape="square">
                   AU
                 </Avatar>
               </Dropdown>
