@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Signup from "./pages/Signup";
+import AstrolgoerProfileDetail from "./pages/AstrolgoerProfileDetail";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             path="/auth/activate-link/:username"
             element={<ActivateAccount />}
           />
+          <Route path="/astrologer/:username" element={<AstrolgoerProfileDetail />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

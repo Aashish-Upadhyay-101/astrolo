@@ -15,6 +15,7 @@ const AstroloHome = () => {
         <div className="astrologer__container">
           {data?.map((astrologer) => (
             <AstrologerItem
+              key={astrologer.user.id}
               profile_picture="https://random.imagecdn.app/500/500"
               city={astrologer.city}
               country={astrologer.country}

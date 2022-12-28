@@ -1,9 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UserType } from "./types";
 import { setUserProfile } from "../features/astrolo/profileSlice";
-import { getAccessToken } from "../helpers/localStorageHandler";
-import { authApi } from "./authApi";
-import { buildQueries } from "@testing-library/react";
 
 export const userApi = createApi({
   reducerPath: "userApi",

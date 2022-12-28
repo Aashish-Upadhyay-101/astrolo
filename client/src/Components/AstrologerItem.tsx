@@ -15,7 +15,7 @@ const AstrologerItem = ({
   price,
 }: AstrologerItemProps) => {
   return (
-    <div className="astrologerItem">
+    <Link to="/astrologer/test" className="astrologerItem">
       <div className="astrologerItem__upper">
         <img className="astrologerItem__upper-image" src={profile_picture} />
         <div>
@@ -48,7 +48,7 @@ const AstrologerItem = ({
           <h2>${price}</h2>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
