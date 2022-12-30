@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Image } from "antd";
 import { useGetAstrologerDetailsQuery } from "../api/userApi";
 import Navbar from "../Components/Navbar";
 import BookAppointmentBox from "../Components/BookAppointmentBox";
 import "./AstrolgoerProfileDetail.css";
+import Review from "../Components/Review";
 
 const AstrolgoerProfileDetail = () => {
+  const [showMore, setShowMore] = useState(false);
+
   const { username } = useParams();
   const navigate = useNavigate();
 
@@ -51,14 +54,34 @@ const AstrolgoerProfileDetail = () => {
                   <p>👍 total reviews: {profile?.num_of_reviews}</p>
                 </div>
               </div>
-              <div className="profile__detail-left-description">
+              <div
+                className={`profile__detail-left-description ${
+                  !showMore && "show-less"
+                } `}
+              >
                 <p>{profile?.about_me}</p>
               </div>
+              <div
+                onClick={() => setShowMore(!showMore)}
+                className="show-more-less"
+              >
+                {showMore ? <>Show less &uarr;</> : <>Show more &darr;</>}
+              </div>
             </div>
-            <h1>
+            <h1 className="review__starting-heading">
               ⭐️ {profile?.rating} profile rating • {profile?.num_of_reviews}{" "}
               reviews
             </h1>
+
+            <div className="reviews">
+              <Review />
+              <Review />
+              <Review />
+              <Review />
+              <Review />
+              <Review />
+              <Review />
+            </div>
           </div>
           <div className="profile__detail-right">
             <BookAppointmentBox />

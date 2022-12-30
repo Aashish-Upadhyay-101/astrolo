@@ -1,0 +1,37 @@
+.review {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 2.4rem;
+}
+
+.review__header {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.review__header-image {
+  width: 6rem;
+  border-radius: 100%;
+}
+
+.review__header-name {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.review__header-name-text {
+  font-size: 1.6rem;
+}
+
+.review__header-name-rating {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-color-2);
+}
+
+.review__description {
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}

@@ -11,7 +11,6 @@
   flex-direction: column;
   gap: 2.4rem;
   padding-bottom: 2.4rem;
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
 .profile__detail-left-info-username {
@@ -42,22 +41,37 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 1.2rem 0;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 .profile__detail-left-description {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   line-height: 1.6;
   margin-top: 1.2rem;
+  overflow: hidden;
+}
+
+.show-less {
+  height: 11rem;
+  margin-bottom: 2rem;
+}
+
+.show-more-less {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color-1);
+  cursor: pointer;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .profile__detail-right {
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
-  /* padding: 2.4rem; */
   position: sticky;
-  /* top: 6.4rem; */
+  top: 6.4rem;
   height: 56rem;
-  position: relative;
 }
 
 .profile__detail-right-infowrapper {
@@ -105,4 +119,15 @@
   text-decoration: underline;
   cursor: pointer;
   color: var(--primary-color-1);
+}
+
+.review__starting-heading {
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.reviews {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.6rem;
 }
