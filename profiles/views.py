@@ -20,11 +20,11 @@ class ProfilesAPIView(APIView):
 
 class GetMyProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
-
     def get(self, request, format=None):
         profile = request.user.profile
         serializer = ProfileSerializer(instance=profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
+        
 
 # patch request -> "MALE",  phone_number -> "<country_code><phone_number>"
 class ProfileGetUpdateAPIView(APIView):
@@ -32,16 +32,12 @@ class ProfileGetUpdateAPIView(APIView):
 
     def get(self, request, username, format=None):
         try: 
-            Profile.objects.get(user__username=username)
+            profile = Profile.objects.get(user__username=username)
         except Profile.DoesNotExist:
             raise ProfileNotFound
         
-        if request.user.username != username:
-            raise NotYourProfile
-        
-        serializer = ProfileSerializer(instance=request.user.profile)
+        serializer = ProfileSerializer(instance=profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
 
     def patch(self, request, username, format=None):
         try:
@@ -57,7 +53,18 @@ class ProfileGetUpdateAPIView(APIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
+
+class GetProfileDetailAPIView(APIView):
+    def get(self, request, id, *args, **kwargs):
+        try:
+            profile = Profile.objects.get(id=id)
+        except Profile.DoesNotExist:
+            raise ProfileNotFound
+        
+        serializer = ProfileSerializer(instance=profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class AstrologerReviewAPIView(APIView):
     permission_classes = [IsAuthenticated]

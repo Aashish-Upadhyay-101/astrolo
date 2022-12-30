@@ -1,6 +1,9 @@
 import React from "react";
 import "./AstrolgoerProfileDetail.css";
 import Navbar from "../Components/Navbar";
+import { Button, Image, Tooltip } from "antd";
+import { HeartOutlined } from "@ant-design/icons";
+import BookAppointmentBox from "../Components/BookAppointmentBox";
 
 const AstrolgoerProfileDetail = () => {
   return (
@@ -18,15 +21,16 @@ const AstrolgoerProfileDetail = () => {
                 Professional Astrologer | Professor @Harvard
               </p>
               <div className="profile__info-main">
-                <img
+                <Image
                   className="profile__info-main-image"
+                  width="12rem"
                   src="https://random.imagecdn.app/500/500"
                 />
                 <div className="profile__info-main-description">
                   <p>⭐️ 4.7 Astrolo Rating</p>
-                  <p>⭐️ 4.7 Astrolo Rating</p>
-                  <p>⭐️ 4.7 Astrolo Rating</p>
-                  <p>⭐️ 4.7 Astrolo Rating</p>
+                  <p>✨ 550+ fortunes tell</p>
+                  <p>🔝 Top Rated</p>
+                  <p>👍 Good</p>
                 </div>
               </div>
               <div className="profile__detail-left-description">
@@ -51,7 +55,7 @@ const AstrolgoerProfileDetail = () => {
             </div>
           </div>
           <div className="profile__detail-right">
-            <h2>right</h2>
+            <BookAppointmentBox />
           </div>
         </div>
       </div>

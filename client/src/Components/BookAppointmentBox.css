@@ -1,0 +1,53 @@
+.bookappointmentbox {
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  height: 56rem;
+  position: relative;
+}
+
+.bookappointmentbox-infowrapper {
+  padding: 2.4rem;
+}
+
+.bookappointmentbox-cta {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+  margin-top: 1.2rem;
+}
+
+.cta-fav {
+  transition: all 0.3s;
+  border: 1px solid var(--primary-color-1);
+  padding: 1rem;
+  border-radius: 5px;
+  color: var(--primary-color-1);
+  cursor: pointer;
+}
+
+.bookappointmentbox-offers {
+  margin-top: 2.4rem;
+}
+
+.offers-heading {
+  font-size: 1.6rem;
+  font-weight: 550;
+}
+
+.offers-list {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}
+
+.offers-list > li {
+  margin-top: 5px;
+}
+
+.share {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--primary-color-1);
+}
