@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { Avatar, Dropdown, MenuProps, Badge, Tooltip, Input } from "antd";
-import { useGetMeMutation } from "../api/userApi";
+import { useGetMeQuery } from "../api/userApi";
 import {
   BellOutlined,
   HeartOutlined,
@@ -32,8 +32,6 @@ const Navbar: React.FC = () => {
   const token = useSelector<RootState>(
     (state) => state.authState.token?.access
   );
-
-  const [] = useGetMeMutation();
   return (
     <nav className="navbar">
       <div className="navbar-brand">

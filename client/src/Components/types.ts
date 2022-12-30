@@ -1,4 +1,5 @@
 export interface AstrologerItemProps {
+  username: string;
   city: string;
   first_name: string;
   last_name: string;

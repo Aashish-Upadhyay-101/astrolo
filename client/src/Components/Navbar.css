@@ -4,9 +4,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 3.2rem;
-  /* background-color: var(--primary-color-1-dim); */
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
   box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
 }
 
 .navbar__right {
@@ -33,7 +33,6 @@
   padding: 0.8rem;
   border: 1px solid var(--primary-color-2-dim);
   border-radius: 8px;
-  /* background-color: var(--primary-color-1-dim); */
 }
 
 .navbar__search-input {

@@ -8,10 +8,12 @@ import { userApi } from "./userApi";
 import { setToken } from "../features/auth/authSlice";
 import { setTokenLocal } from "../helpers/localStorageHandler";
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT;
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "auth/",
+    baseUrl: `${BASE_URL}/auth/`,
   }),
   endpoints: (builder) => ({
     registerUser: builder.mutation<UserTokenResponse, RegisterUserFieldType>({
@@ -36,7 +38,7 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setToken(data));
           setTokenLocal(JSON.stringify(data));
-          await dispatch(userApi.endpoints.getMe.initiate(data.access));
+          await dispatch(userApi.endpoints.getMe.initiate());
         } catch (error) {
           console.log(error);
         }

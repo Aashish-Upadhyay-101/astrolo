@@ -13,9 +13,10 @@ const AstrologerItem = ({
   city,
   country,
   price,
+  username,
 }: AstrologerItemProps) => {
   return (
-    <Link to="/astrologer/test" className="astrologerItem">
+    <Link to={`/astrologer/${username}`} className="astrologerItem">
       <div className="astrologerItem__upper">
         <img className="astrologerItem__upper-image" src={profile_picture} />
         <div>

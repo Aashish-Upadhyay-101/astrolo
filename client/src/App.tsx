@@ -21,7 +21,10 @@ const App: React.FC = () => {
             path="/auth/activate-link/:username"
             element={<ActivateAccount />}
           />
-          <Route path="/astrologer/:username" element={<AstrolgoerProfileDetail />} />
+          <Route
+            path="/astrologer/:username"
+            element={<AstrolgoerProfileDetail />}
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

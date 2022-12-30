@@ -28,7 +28,7 @@ class Profile(TimeStampUUIDModel):
     country = CountryField(blank=False, null=False)
     zip_code = models.CharField(max_length=10, blank=True, null=True)
     city = models.CharField(max_length=50, blank=False, null=False)
-    about_me = models.TextField(max_length=255, default="Say something about yourself", blank=False, null=False)
+    about_me = models.TextField(max_length=1000, default="Say something about yourself", blank=False, null=False)
     profile_picture = models.ImageField(upload_to="profile_pictures", blank=True, null=True)
     profile_intro_video = models.FileField(upload_to="profile_videos", blank=True, null=True)
     profile_type = models.CharField(max_length=30, choices=ProfileType.choices, default=ProfileType.NORMAL_USER, blank=False, null=False)

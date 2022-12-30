@@ -1,11 +1,28 @@
-import React from "react";
-import "./AstrolgoerProfileDetail.css";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Image } from "antd";
+import { useGetAstrologerDetailsQuery } from "../api/userApi";
 import Navbar from "../Components/Navbar";
-import { Button, Image, Tooltip } from "antd";
-import { HeartOutlined } from "@ant-design/icons";
 import BookAppointmentBox from "../Components/BookAppointmentBox";
+import "./AstrolgoerProfileDetail.css";
 
 const AstrolgoerProfileDetail = () => {
+  const { username } = useParams();
+  const navigate = useNavigate();
+
+  const {
+    data: profile,
+    isError,
+    error,
+  } = useGetAstrologerDetailsQuery(username || "");
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+      navigate("/page-not-found");
+    }
+  }, [isError, error]);
+
   return (
     <>
       <Navbar />
@@ -15,7 +32,8 @@ const AstrolgoerProfileDetail = () => {
             <h4 className="text-2">Astrologer</h4>
             <div className="profile__detail-left-info">
               <h5 className="profile__detail-left-info-username">
-                Aashish Upadhyay | Certified Astrologer | NASA
+                {profile?.user.first_name} {profile?.user.last_name} | Certified
+                Astrologer | NASA
               </h5>
               <p className="profile__info-short-description">
                 Professional Astrologer | Professor @Harvard
@@ -27,32 +45,20 @@ const AstrolgoerProfileDetail = () => {
                   src="https://random.imagecdn.app/500/500"
                 />
                 <div className="profile__info-main-description">
-                  <p>⭐️ 4.7 Astrolo Rating</p>
-                  <p>✨ 550+ fortunes tell</p>
-                  <p>🔝 Top Rated</p>
-                  <p>👍 Good</p>
+                  <p>⭐️ {profile?.rating} Astrolo Rating</p>
+                  <p>✨ city: {profile?.city}</p>
+                  <p>🔝 country: {profile?.country}</p>
+                  <p>👍 total reviews: {profile?.num_of_reviews}</p>
                 </div>
               </div>
               <div className="profile__detail-left-description">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-                  consequatur sit quod eos dignissimos repellat sequi deleniti,
-                  minima, esse repellendus sint at sunt. Odit, quia beatae
-                  architecto quos modi harum. Lorem ipsum dolor sit amet
-                  consectetur adipisicing elit. Quasi saepe rerum repellat
-                  possimus facere tenetur
-                  <br />
-                  incidunt laudantium veniam perferendis odio! Lorem ipsum dolor
-                  sit amet consectetur adipisicing elit. Mollitia totam in
-                  recusandae neque distinctio porro, Lorem, ipsum dolor sit amet
-                  consectetur adipisicing elit. Ad, ut!
-                  <br /> necessitatibus provident exercitationem natus debitis,
-                  nobis, eius libero assumenda perferendis? Ab ad reiciendis
-                  recusandae nesciunt. Lorem ipsum dolor, sit amet consectetur
-                  adipisicing elit. Animi, dolore.
-                </p>
+                <p>{profile?.about_me}</p>
               </div>
             </div>
+            <h1>
+              ⭐️ {profile?.rating} profile rating • {profile?.num_of_reviews}{" "}
+              reviews
+            </h1>
           </div>
           <div className="profile__detail-right">
             <BookAppointmentBox />
