@@ -9,3 +9,11 @@ export interface AstrologerItemProps {
   profile_picture: string;
   price: number;
 }
+
+export interface AstrologerReviewProps {
+  key: string;
+  rater: string;
+  rating: number;
+  review_date: string;
+  review_comment: string;
+}

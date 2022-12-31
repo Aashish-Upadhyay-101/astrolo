@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { UserType } from "./types";
+import { ReviewType, UserType } from "./types";
 import { setUserProfile } from "../features/astrolo/profileSlice";
 import { RootState } from "../app/store";
 
@@ -50,6 +50,14 @@ export const userApi = createApi({
         };
       },
     }),
+    getAstrologerReviews: builder.query<[ReviewType], string>({
+      query(profile_id) {
+        return {
+          method: "GET",
+          url: `review/${profile_id}/`,
+        };
+      },
+    }),
   }),
 });
 
@@ -57,4 +65,5 @@ export const {
   useGetMeQuery,
   useGetAllAstrologersQuery,
   useGetAstrologerDetailsQuery,
+  useGetAstrologerReviewsQuery,
 } = userApi;

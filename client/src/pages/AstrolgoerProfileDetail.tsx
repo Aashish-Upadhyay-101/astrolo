@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Image } from "antd";
-import { useGetAstrologerDetailsQuery } from "../api/userApi";
+import {
+  useGetAstrologerDetailsQuery,
+  useGetAstrologerReviewsQuery,
+} from "../api/userApi";
 import Navbar from "../Components/Navbar";
 import BookAppointmentBox from "../Components/BookAppointmentBox";
 import "./AstrolgoerProfileDetail.css";
@@ -15,16 +18,20 @@ const AstrolgoerProfileDetail = () => {
 
   const {
     data: profile,
-    isError,
-    error,
+    isError: profileIsError,
+    error: profileError,
   } = useGetAstrologerDetailsQuery(username || "");
 
+  const { data: reviews } = useGetAstrologerReviewsQuery(profile?.id || "");
+
   useEffect(() => {
-    if (isError) {
-      console.log(error);
+    if (profileIsError) {
+      console.log(profileError);
       navigate("/page-not-found");
     }
-  }, [isError, error]);
+
+    console.log(reviews);
+  }, [profileIsError, profileError, reviews]);
 
   return (
     <>
@@ -74,13 +81,15 @@ const AstrolgoerProfileDetail = () => {
             </h1>
 
             <div className="reviews">
-              <Review />
-              <Review />
-              <Review />
-              <Review />
-              <Review />
-              <Review />
-              <Review />
+              {reviews?.map((review) => (
+                <Review
+                  key={review.id}
+                  rater={review.rater}
+                  rating={review.rating}
+                  review_date={review.created_at}
+                  review_comment={review.review_comment}
+                />
+              ))}
             </div>
           </div>
           <div className="profile__detail-right">

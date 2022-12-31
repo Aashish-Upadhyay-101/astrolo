@@ -1,7 +1,14 @@
 import React from "react";
 import "./Review.css";
+import { AstrologerReviewProps } from "./types";
+import { Rate } from "antd";
 
-const Review = () => {
+const Review = ({
+  rater,
+  rating,
+  review_comment,
+  review_date,
+}: AstrologerReviewProps) => {
   return (
     <div className="review">
       <div className="review__header">
@@ -10,17 +17,14 @@ const Review = () => {
           src="https://random.imagecdn.app/500/500"
         />
         <div className="review__header-name">
-          <h3 className="review__header-name-text">Aashish Upadhyay</h3>
+          <h3 className="review__header-name-text">{rater}</h3>
           <span className="review__header-name-rating">
-            ⭐️⭐️⭐️⭐️⭐️ 3days ago
+            <Rate count={5} defaultValue={rating} disabled />{" "}
+            <span>3 days ago</span>
           </span>
         </div>
       </div>
-      <div className="review__description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-        excepturi accusamus fuga odio? Vitae repudiandae voluptatum non labore
-        sit unde? Lorem ipsum dolor sit amet.
-      </div>
+      <div className="review__description">{review_comment}</div>
     </div>
   );
 };

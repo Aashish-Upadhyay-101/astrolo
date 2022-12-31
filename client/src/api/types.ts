@@ -13,6 +13,7 @@ export interface UserType {
     email: string;
     is_active: boolean;
   };
+  id: string;
   phone_number: string;
   country: string;
   gender: string;
@@ -24,6 +25,15 @@ export interface UserType {
   profile_type: string;
   num_of_reviews: number;
   rating: number;
+}
+
+export interface ReviewType {
+  id: string;
+  rater: string;
+  astrologer: string;
+  created_at: string;
+  rating: number;
+  review_comment: string;
 }
 
 export interface RegisterUserFieldType {

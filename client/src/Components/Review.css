@@ -30,6 +30,10 @@
   color: var(--text-color-2);
 }
 
+.review__header-name-rating > span {
+  margin-left: 1.2rem;
+}
+
 .review__description {
   margin-top: 1.2rem;
   font-size: 1.6rem;
