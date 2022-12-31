@@ -37,5 +37,4 @@ class ProfileReviewSerializer(serializers.ModelSerializer):
     def get_astrologer(self, obj):
         return obj.astrologer.user.username
 
-    
 

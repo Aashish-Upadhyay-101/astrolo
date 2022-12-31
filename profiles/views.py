@@ -4,7 +4,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.response import Response 
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ProfileSerializer, ProfileUpdateSerailizer
+from .serializers import ProfileSerializer, ProfileUpdateSerailizer, ProfileReviewSerializer
 from .models import Profile, Reviews
 from common.exceptions import ProfileNotFound, NotYourProfile
 
@@ -69,11 +69,21 @@ class GetProfileDetailAPIView(APIView):
 class AstrologerReviewAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request, profile_id, format=None):
+        astrologer_profile = Profile.objects.get(id=profile_id)
+
+        if not astrologer_profile.is_astrologer:
+            return Response({"message": "You can't have review for non astrologers"}, status=status.HTTP_400_BAD_REQUEST)
+
+        reviews = astrologer_profile.astrologer_review.filter(astrologer=astrologer_profile)
+        serializer = ProfileReviewSerializer(instance=reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def post(self, request, profile_id, format=None):
         astrologer_profile = Profile.objects.get(id=profile_id)
 
         if not astrologer_profile.is_astrologer:
-            return Response({"message": "You can't rate a non astrologer"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "You can't rate a non astrologers"}, status=status.HTTP_400_BAD_REQUEST)
 
         astrologer_profile_user = astrologer_profile.user 
 
