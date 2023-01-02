@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,7 +26,18 @@ class AppointmentCreateAPIView(APIView):
             return Response({"message": "You can't take appointment with a non astrologer"}, status=status.HTTP_400_BAD_REQUEST)
 
         data = request.data
-        Appointment.objects.create(customer=request.user, astrologer=astrologer_profile.user, start_at=data.get("start_at"))
+
+        date = data.get('start_date')
+        date_format = "%Y-%m-%d"
+        date_obj = datetime.strptime(date, date_format)
+        data['start_date'] = date_obj.strftime(date_format)
+
+        time = data.get('start_time')
+        time_format = "%H:%M:%S"
+        time_obj = datetime.strptime(time, time_format)
+        data['start_time'] = time_obj.strftime(time_format)
+
+        Appointment.objects.create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
         
         return Response({"message": "Appointment has been created"}, status=status.HTTP_200_OK)
         

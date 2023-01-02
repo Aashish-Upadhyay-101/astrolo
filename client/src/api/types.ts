@@ -56,5 +56,6 @@ export interface AppointmentBookedResponseType {
 
 export interface AppointmentBooking {
   astrologer_username: string;
-  start_at: string;
+  start_date: string;
+  start_time: string;
 }

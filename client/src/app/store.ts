@@ -15,7 +15,11 @@ export const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([userApi.middleware, authApi.middleware]),
+    getDefaultMiddleware({}).concat([
+      userApi.middleware,
+      authApi.middleware,
+      astroloApi.middleware,
+    ]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
