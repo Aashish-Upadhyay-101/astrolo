@@ -1,9 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
+import { AppointmentBookedResponseType, AppointmentBooking } from "./types";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT;
 
-const astroloApi = createApi({
+export const astroloApi = createApi({
   reducerPath: "astroloApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/appointment/`,
@@ -14,5 +15,20 @@ const astroloApi = createApi({
       }
     },
   }),
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    createAppointment: builder.mutation<
+      AppointmentBookedResponseType,
+      AppointmentBooking
+    >({
+      query(data) {
+        return {
+          url: `${data.astrologer_username}/`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+  }),
 });
+
+export const { useCreateAppointmentMutation } = astroloApi;

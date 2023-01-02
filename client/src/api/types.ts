@@ -49,3 +49,12 @@ export interface LoginUserType {
   email: string;
   password: string;
 }
+
+export interface AppointmentBookedResponseType {
+  message: string;
+}
+
+export interface AppointmentBooking {
+  astrologer_username: string;
+  start_at: string;
+}
