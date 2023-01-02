@@ -1,0 +1,15 @@
+.appointments {
+  max-width: 50rem;
+  margin: 0 auto;
+  margin-top: 6.4rem;
+}
+
+.appointment__box {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.appointment__box-input {
+  margin-top: 2.4rem;
+}

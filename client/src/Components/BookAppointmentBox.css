@@ -17,6 +17,19 @@
   margin-top: 1.2rem;
 }
 
+.appointment-btn {
+  background-color: var(--primary-color-1);
+  padding: 1.4rem 1.2rem;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.appointment-btn:hover {
+  background-color: var(--primary-color-1-hover);
+  color: #fff;
+}
+
 .cta-fav {
   transition: all 0.3s;
   border: 1px solid var(--primary-color-1);

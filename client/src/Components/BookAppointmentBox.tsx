@@ -1,9 +1,11 @@
 import { HeartOutlined } from "@ant-design/icons";
-import { Button, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import "./BookAppointmentBox.css";
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 
 const BookAppointmentBox = () => {
+  const { username } = useParams();
   return (
     <div className="bookappointmentbox">
       <iframe
@@ -19,10 +21,13 @@ const BookAppointmentBox = () => {
       <div className="bookappointmentbox-infowrapper">
         <h2 className="text-2">$12.55</h2>
         <div className="bookappointmentbox-cta">
-          <Button size="large" className="btn-primary" type="primary">
-            <strong>Book an Appoinment</strong>
-          </Button>
-
+          <Link
+            to={`/astrologer/${username}/book-an-appointment`}
+            className="appointment-btn"
+            type="primary"
+          >
+            <strong>Book Appoinment</strong>
+          </Link>
           <Tooltip title="Add to favorites" color="var(--primary-color-1)">
             <HeartOutlined className="normal-icon cta-fav" />
           </Tooltip>

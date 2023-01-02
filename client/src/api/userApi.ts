@@ -11,7 +11,6 @@ export const userApi = createApi({
     baseUrl: `${BASE_URL}/profile/`,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).authState.token?.access;
-
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

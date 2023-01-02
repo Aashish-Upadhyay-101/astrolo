@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Signup from "./pages/Signup";
 import AstrolgoerProfileDetail from "./pages/AstrolgoerProfileDetail";
+import Appointments from "./pages/Appointments";
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,10 @@ const App: React.FC = () => {
           <Route
             path="/astrologer/:username"
             element={<AstrolgoerProfileDetail />}
+          />
+          <Route
+            path="/astrologer/:username/book-an-appointment"
+            element={<Appointments />}
           />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

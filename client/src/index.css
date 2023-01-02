@@ -64,6 +64,10 @@ a:hover {
   margin: 0 auto;
 }
 
+.primary {
+  color: var(--primary-color-1);
+}
+
 .m-2 {
   margin-top: 12px !important;
 }
@@ -155,8 +159,29 @@ a:hover {
 .ant-rate-star.ant-rate-star-full,
 .ant-rate-star.ant-rate-star-zero,
 .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
-  margin: -0.6rem;
+  margin: 0 -0.6rem;
   color: var(--primary-color-1);
+}
+
+.ant-picker:hover,
+.ant-picker:focus-within {
+  border-color: var(--primary-color-1);
+}
+
+.ant-btn {
+  background-color: var(--primary-color-1);
+}
+
+.ant-btn:hover {
+  background-color: var(--primary-color-1) !important;
+}
+
+.ant-picker-today-btn {
+  color: var(--primary-color-1) !important;
+}
+
+.ant-picker-cell-selected .ant-picker-cell-inner {
+  background-color: var(--primary-color-1) !important;
 }
 
 .avatar {

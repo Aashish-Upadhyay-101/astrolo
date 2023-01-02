@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'user',
     'profiles',
+    'appointment',
     'common',
     'django_countries',
     'phonenumber_field',

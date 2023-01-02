@@ -22,8 +22,8 @@ const AstroloHome = () => {
               country={astrologer.country}
               first_name={astrologer.user.first_name}
               last_name={astrologer.user.last_name}
-              num_of_reviews={astrologer.num_of_reviews}
-              rating={astrologer.rating}
+              num_of_reviews={astrologer.num_of_reviews || 0}
+              rating={astrologer.rating || 0}
               price={19.99}
             />
           ))}
