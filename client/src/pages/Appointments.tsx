@@ -2,12 +2,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { Button, DatePicker, DatePickerProps, Input, TimePicker } from "antd";
+import {
+  Button,
+  DatePicker,
+  DatePickerProps,
+  Input,
+  TimePicker,
+  TimePickerProps,
+} from "antd";
 import { useGetAstrologerDetailsQuery } from "../api/userApi";
 import { useCreateAppointmentMutation } from "../api/astroloApi";
 import "./Appointments.css";
 import Navbar from "../Components/Navbar";
 import "../index.css";
+import moment, { min } from "moment";
 
 const Appointments = () => {
   const [appointmentDetail, setAppointmentDetail] = useState({
@@ -22,7 +30,11 @@ const Appointments = () => {
 
   const [
     CreateAppointment,
-    { isError: CreateAppointmentIsError, error: CreateAppointmentError },
+    {
+      isError: CreateAppointmentIsError,
+      error: CreateAppointmentError,
+      isSuccess: CreateAppointmentIsSuccess,
+    },
   ] = useCreateAppointmentMutation();
 
   useEffect(() => {
@@ -56,6 +68,9 @@ const Appointments = () => {
     if (CreateAppointmentIsError) {
       console.log(CreateAppointmentError);
     }
+    if (CreateAppointmentIsSuccess) {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -73,11 +88,31 @@ const Appointments = () => {
             className="primary"
             placeholder="Expected appointment date"
             onChange={onDateFieldChange}
+            disabledDate={(current) => {
+              let customDate = moment().format("YYYY-MM-DD");
+              console.log(moment(customDate, "YYYY-MM-DD"));
+              return current && current < moment(customDate, "YYYY-MM-DD");
+            }}
           />
           <TimePicker
             placeholder="Expected time"
             onChange={onTimeFieldChange}
             defaultValue={dayjs("00:00:00", "HH:mm:ss")}
+            hideDisabledOptions={true}
+            showNow={false}
+            showSecond={false}
+            disabledHours={() => {
+              const hours = [];
+              for (let i = 0; i < moment().hour(); i += 1) hours.push(i);
+              return hours;
+            }}
+            disabledMinutes={() => {
+              const minutes = [];
+              for (let i = 0; i < moment().minutes(); i++) {
+                minutes.push(i);
+              }
+              return minutes;
+            }}
           />
 
           <Button

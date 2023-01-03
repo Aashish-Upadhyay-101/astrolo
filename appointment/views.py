@@ -27,6 +27,7 @@ class AppointmentCreateAPIView(APIView):
 
         data = request.data
 
+        # changing date/time string to python date/time object
         date = data.get('start_date')
         date_format = "%Y-%m-%d"
         date_obj = datetime.strptime(date, date_format)
@@ -37,7 +38,12 @@ class AppointmentCreateAPIView(APIView):
         time_obj = datetime.strptime(time, time_format)
         data['start_time'] = time_obj.strftime(time_format)
 
-        Appointment.objects.create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
+
+        appointment, created = Appointment.objects.get_or_create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
+        if not created:
+            return Response({"message": "You can't schedule an appointment twice with a same astrologer"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Appointment.objects.create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
         
         return Response({"message": "Appointment has been created"}, status=status.HTTP_200_OK)
         

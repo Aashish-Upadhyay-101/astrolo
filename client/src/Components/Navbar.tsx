@@ -9,6 +9,7 @@ import {
   HeartOutlined,
   MessageOutlined,
   SearchOutlined,
+  SnippetsOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import "./Navbar.css";
@@ -68,6 +69,11 @@ const Navbar: React.FC = () => {
               <li className="navbar__right-link">
                 <HeartOutlined className="normal-icon" />
               </li>
+            </Tooltip>
+            <Tooltip title="dashboard" color="var(--primary-color-1)">
+              <Link to="/dashboard" className="navbar__right-link">
+                <SnippetsOutlined className="normal-icon" />
+              </Link>
             </Tooltip>
             <li className="navbar__right-link">
               <Badge count={4} size="small">
