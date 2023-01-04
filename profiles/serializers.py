@@ -19,7 +19,7 @@ class ProfileUpdateSerailizer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["phone_number", "country", "gender", "zip_code", "city", "about_me", "profile_picture", "profile_intro_video", "profile_type", "num_of_reviews", "rating"]
+        fields = ["phone_number", "country", "gender", "zip_code", "city", "about_me", "profile_picture", "profile_intro_video", "profile_type", "num_of_reviews", "rating", "price"]
 
 
 

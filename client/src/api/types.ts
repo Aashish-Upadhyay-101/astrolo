@@ -25,6 +25,7 @@ export interface UserType {
   profile_type: string;
   num_of_reviews: number;
   rating: number;
+  price: number;
 }
 
 export interface ReviewType {

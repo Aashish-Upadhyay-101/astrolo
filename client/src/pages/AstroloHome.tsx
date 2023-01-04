@@ -24,7 +24,7 @@ const AstroloHome = () => {
               last_name={astrologer.user.last_name}
               num_of_reviews={astrologer.num_of_reviews || 0}
               rating={astrologer.rating || 0}
-              price={19.99}
+              price={astrologer.price}
             />
           ))}
         </div>

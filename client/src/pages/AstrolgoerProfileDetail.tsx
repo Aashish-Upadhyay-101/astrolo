@@ -93,7 +93,7 @@ const AstrolgoerProfileDetail = () => {
             </div>
           </div>
           <div className="profile__detail-right">
-            <BookAppointmentBox />
+            <BookAppointmentBox price={profile?.price || 0} />
           </div>
         </div>
       </div>

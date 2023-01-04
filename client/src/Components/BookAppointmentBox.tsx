@@ -4,7 +4,7 @@ import "./BookAppointmentBox.css";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 
-const BookAppointmentBox = () => {
+const BookAppointmentBox = ({ price }: { price: number | 0 }) => {
   const { username } = useParams();
   return (
     <div className="bookappointmentbox">
@@ -19,7 +19,7 @@ const BookAppointmentBox = () => {
         //   allowfullscreen
       ></iframe>
       <div className="bookappointmentbox-infowrapper">
-        <h2 className="text-2">$12.55</h2>
+        <h2 className="text-2">${price}</h2>
         <div className="bookappointmentbox-cta">
           <Link
             to={`/astrologer/${username}/book-an-appointment`}

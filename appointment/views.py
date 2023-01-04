@@ -42,12 +42,9 @@ class AppointmentCreateAPIView(APIView):
         data['start_date'] = date_obj.strftime(date_format)
 
         time = data.get('start_time')
-        print(time)
         time_format = "%H:%M:%S"
         time_obj = datetime.strptime(time, time_format)
-        print(time_obj)
         data['start_time'] = time_obj.strftime(time_format)
-
 
         appointment, created = Appointment.objects.get_or_create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
         if not created:
@@ -68,13 +65,13 @@ class CreateCheckoutSession(APIView):
                             "name": astrologer_profile.user.username,
                             "description": "Book an appointment with this astrologer and see your furtunes"
                         },
-                        "unit_amount": 1000,
+                        "unit_amount": astrologer_profile.price * 100,
                     },
                     "quantity": 1,
                 }],
                 mode = "payment",
-                success_url = "http://localhost:3000/success",
-                cancel_url = "http://localhost:3000/cancel",
+                success_url = "http://localhost:3000/astrologer/checkout/success",
+                cancel_url = "http://localhost:3000/astrologer/checkout/cancel",
             )
             return Response(checkout_session.url)
         except Exception as e:

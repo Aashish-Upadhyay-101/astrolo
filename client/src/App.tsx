@@ -10,6 +10,8 @@ import Signup from "./pages/Signup";
 import AstrolgoerProfileDetail from "./pages/AstrolgoerProfileDetail";
 import Appointments from "./pages/Appointments";
 import { Elements } from "@stripe/react-stripe-js";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 
 const stripe_key = process.env.REACT_APP_STRIPE_KEY || "";
 const stripePromise = loadStripe(stripe_key);
@@ -35,6 +37,14 @@ const App: React.FC = () => {
             <Route
               path="/astrologer/:username/book-an-appointment"
               element={<Appointments />}
+            />
+            <Route
+              path="/astrologer/checkout/success"
+              element={<PaymentSuccess />}
+            />
+            <Route
+              path="/astrologer/checkout/cancel"
+              element={<PaymentCancel />}
             />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
