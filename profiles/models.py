@@ -35,6 +35,7 @@ class Profile(TimeStampUUIDModel):
     rating = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
     num_of_reviews = models.PositiveIntegerField(default=0, blank=True, null=True)
 
+
     @property
     def is_astrologer(self):
         return self.profile_type == "Astrologer"

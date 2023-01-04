@@ -22,8 +22,8 @@ import moment from "moment";
 
 const Appointments = () => {
   const [appointmentDetail, setAppointmentDetail] = useState({
-    start_date: "",
-    start_time: "",
+    start_date: moment().format("YYYY-MM-DD"),
+    start_time: "00:00:00",
   });
   const { username } = useParams();
   const navigate = useNavigate();
@@ -110,11 +110,11 @@ const Appointments = () => {
             className="primary"
             placeholder="Expected appointment date"
             onChange={onDateFieldChange}
+            defaultValue={dayjs(appointmentDetail.start_date, "YYYY-MM-DD")}
             disabledDate={(current) => {
               let customDate = moment().format("YYYY-MM-DD");
               return current && current < moment(customDate, "YYYY-MM-DD");
             }}
-            name="start_date"
           />
           <TimePicker
             placeholder="Expected time"
@@ -123,7 +123,6 @@ const Appointments = () => {
             hideDisabledOptions={true}
             showNow={false}
             showSecond={false}
-            name="start_time"
             disabledHours={() => {
               const hours = [];
               if (

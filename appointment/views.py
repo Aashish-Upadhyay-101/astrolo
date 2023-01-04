@@ -42,8 +42,10 @@ class AppointmentCreateAPIView(APIView):
         data['start_date'] = date_obj.strftime(date_format)
 
         time = data.get('start_time')
+        print(time)
         time_format = "%H:%M:%S"
         time_obj = datetime.strptime(time, time_format)
+        print(time_obj)
         data['start_time'] = time_obj.strftime(time_format)
 
 
@@ -66,7 +68,7 @@ class CreateCheckoutSession(APIView):
                             "name": astrologer_profile.user.username,
                             "description": "Book an appointment with this astrologer and see your furtunes"
                         },
-                        "unit_amount": 1999,
+                        "unit_amount": 1000,
                     },
                     "quantity": 1,
                 }],
