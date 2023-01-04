@@ -12,8 +12,7 @@ import "./Signup.css";
 const Signup: React.FC = () => {
   const navigate = useNavigate();
 
-  const [SigupUser, { isError: isErrorSignup, error: errorSignup }] =
-    useRegisterUserMutation();
+  const [SigupUser, { isError: isErrorSignup }] = useRegisterUserMutation();
 
   const [SendVerificationEmail, { isError: isErrorSendVerificationEmail }] =
     useSendVerificationEmailMutation();

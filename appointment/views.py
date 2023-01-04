@@ -1,13 +1,21 @@
 from datetime import datetime
+import stripe
+
+from django.conf import settings
+from django.http import JsonResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from common.exceptions import ProfileNotFound
 from profiles.models import Profile
 from .models import Appointment
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class AppointmentCreateAPIView(APIView):
@@ -42,11 +50,61 @@ class AppointmentCreateAPIView(APIView):
         appointment, created = Appointment.objects.get_or_create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
         if not created:
             return Response({"message": "You can't schedule an appointment twice with a same astrologer"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Appointment.objects.create(customer=request.user, astrologer=astrologer_profile.user, start_date=data.get("start_date"), start_time=data.get("start_time"))
         
         return Response({"message": "Appointment has been created"}, status=status.HTTP_200_OK)
         
         
+class CreateCheckoutSession(APIView):
+    def post(self, request, username, *args, **kwargs):
+        astrologer_profile = Profile.objects.get(user__username=username)
+        try: 
+            checkout_session = stripe.checkout.Session.create(
+                line_items = [{
+                    "price_data": {
+                        "currency": "usd",
+                        "product_data": {
+                            "name": astrologer_profile.user.username,
+                            "description": "Book an appointment with this astrologer and see your furtunes"
+                        },
+                        "unit_amount": 1999,
+                    },
+                    "quantity": 1,
+                }],
+                mode = "payment",
+                success_url = "http://localhost:3000/success",
+                cancel_url = "http://localhost:3000/cancel",
+            )
+            return Response(checkout_session.url)
+        except Exception as e:
+            print("error occor")
+            print(e)
+            return Response("Something went wrong")
+
+
+class CheckoutWebHook(APIView):
+    def post(self, request, *args, **kwargs):
+        event = None
+        payload = request.data 
+        sig_header = request.headers["STRIPE_SIGNATURE"]
+        endpoint_secret = settings.STRIPE_WEBHOOK_KEY
+
+        try:
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, endpoint_secret
+            )
+        except ValueError as e:
+            raise e 
+        except stripe.error.SignatureVerificationError as e:
+            raise e
         
+        if event["type"] == "payment_intent.succeeded":
+            payment_intent = event["data"]["object"]
+        else:
+            print("Unhandled event type {}".format(event["type"]))
+        
+        return JsonResponse(success=True, safe=False)
+
+        
+
+
 

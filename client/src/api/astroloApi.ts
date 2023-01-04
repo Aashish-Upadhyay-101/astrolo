@@ -28,7 +28,18 @@ export const astroloApi = createApi({
         };
       },
     }),
+    createCheckoutSession: builder.mutation<any, string>({
+      query(profile_id) {
+        return {
+          url: `checkout/create-checkout-session/${profile_id}/`,
+          method: "POST",
+        };
+      },
+    }),
   }),
 });
 
-export const { useCreateAppointmentMutation } = astroloApi;
+export const {
+  useCreateAppointmentMutation,
+  useCreateCheckoutSessionMutation,
+} = astroloApi;

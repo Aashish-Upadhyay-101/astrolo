@@ -6,16 +6,19 @@ import {
   Button,
   DatePicker,
   DatePickerProps,
+  Form,
   Input,
   TimePicker,
-  TimePickerProps,
 } from "antd";
 import { useGetAstrologerDetailsQuery } from "../api/userApi";
-import { useCreateAppointmentMutation } from "../api/astroloApi";
+import {
+  useCreateAppointmentMutation,
+  useCreateCheckoutSessionMutation,
+} from "../api/astroloApi";
 import "./Appointments.css";
 import Navbar from "../Components/Navbar";
 import "../index.css";
-import moment, { min } from "moment";
+import moment from "moment";
 
 const Appointments = () => {
   const [appointmentDetail, setAppointmentDetail] = useState({
@@ -37,11 +40,44 @@ const Appointments = () => {
     },
   ] = useCreateAppointmentMutation();
 
+  const [
+    CreateCheckoutSession,
+    {
+      data,
+      isError: isErrorCreateCheckoutSession,
+      error: errorCreateCheckoutSession,
+    },
+  ] = useCreateCheckoutSessionMutation();
+
   useEffect(() => {
     if (appointmentIsError) {
       navigate("/page-not-found");
     }
   }, [appointmentIsError]);
+
+  // stripe integration redirection
+  useEffect(() => {
+    if (CreateAppointmentIsSuccess) {
+      CreateCheckoutSession(username || "");
+    }
+
+    if (data) {
+      window.location.href = data;
+    }
+  }, [data, CreateAppointmentIsSuccess]);
+
+  const appointmentBookingHandler = () => {
+    const finalDetail = {
+      ...appointmentDetail,
+      astrologer_username: username || "",
+    };
+
+    CreateAppointment(finalDetail);
+
+    if (CreateAppointmentIsError) {
+      console.log(CreateAppointmentError);
+    }
+  };
 
   const onDateFieldChange: DatePickerProps["onChange"] = (date, dateString) => {
     setAppointmentDetail({
@@ -57,32 +93,18 @@ const Appointments = () => {
     });
   };
 
-  const appointmentBookingHandler = () => {
-    const finalDetail = {
-      ...appointmentDetail,
-      astrologer_username: username || "",
-    };
-
-    CreateAppointment(finalDetail);
-
-    if (CreateAppointmentIsError) {
-      console.log(CreateAppointmentError);
-    }
-    if (CreateAppointmentIsSuccess) {
-      navigate("/dashboard");
-    }
-  };
-
   return (
     <>
       <Navbar />
       <div className="appointments">
         <h1>Book an Appointment</h1>
-        <div className="appointment__box">
+
+        <Form className="appointment__box">
           <Input
             className="appointment__box-input"
             placeholder={`${username}`}
             disabled
+            name="username"
           />
           <DatePicker
             className="primary"
@@ -90,9 +112,9 @@ const Appointments = () => {
             onChange={onDateFieldChange}
             disabledDate={(current) => {
               let customDate = moment().format("YYYY-MM-DD");
-              console.log(moment(customDate, "YYYY-MM-DD"));
               return current && current < moment(customDate, "YYYY-MM-DD");
             }}
+            name="start_date"
           />
           <TimePicker
             placeholder="Expected time"
@@ -101,15 +123,22 @@ const Appointments = () => {
             hideDisabledOptions={true}
             showNow={false}
             showSecond={false}
+            name="start_time"
             disabledHours={() => {
               const hours = [];
-              for (let i = 0; i < moment().hour(); i += 1) hours.push(i);
+              if (
+                moment().format("YYYY-MM-DD") == appointmentDetail.start_date
+              ) {
+                for (let i = 0; i < moment().hour(); i++) hours.push(i);
+              }
               return hours;
             }}
             disabledMinutes={() => {
               const minutes = [];
-              for (let i = 0; i < moment().minutes(); i++) {
-                minutes.push(i);
+              if (
+                moment().format("YYYY-MM-DD") == appointmentDetail.start_date
+              ) {
+                for (let i = 0; i < moment().minutes(); i++) minutes.push(i);
               }
               return minutes;
             }}
@@ -122,10 +151,9 @@ const Appointments = () => {
           >
             Go to Payment
           </Button>
-        </div>
+        </Form>
       </div>
     </>
   );
 };
-
 export default Appointments;

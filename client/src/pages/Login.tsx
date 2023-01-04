@@ -99,7 +99,12 @@ const Login: React.FC = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="btn-primary">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="btn-primary"
+              loading={isLoading}
+            >
               Log in
             </Button>
             <div className="m-2">
