@@ -165,6 +165,20 @@ a:hover {
   color: var(--primary-color-1);
 }
 
+.ant-pagination .ant-pagination-item {
+  border-color: var(--primary-color-1);
+  color: var(--primary-color-1);
+}
+
+.ant-pagination-item > a {
+  color: var(--primary-color-1) !important;
+}
+
+.ant-pagination:hover .ant-pagination-item:hover {
+  border-color: var(--primary-color-1);
+  color: var(--primary-color-1);
+}
+
 .ant-picker:hover,
 .ant-picker:focus-within {
   border-color: var(--primary-color-1);

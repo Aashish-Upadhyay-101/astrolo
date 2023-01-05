@@ -1,13 +1,16 @@
 from rest_framework import serializers
-from profiles.serializers import ProfileSerializer
+from common.serializers import UserModelSerializer
 from .models import Appointment
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    customer = ProfileSerializer()
-    astrologer = ProfileSerializer()
+    customer = UserModelSerializer()
+    astrologer = UserModelSerializer()
+    location = serializers.SerializerMethodField()
     class Meta:
         model = Appointment
         fields = "__all__"
 
+    def get_location(self, obj):
+        return f"{obj.astrologer.profile.city}, {obj.astrologer.profile.country}"
 

@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
-import { AppointmentBookedResponseType, AppointmentBooking } from "./types";
+import {
+  AppointmentBookedResponseType,
+  AppointmentBooking,
+  AppointmentResponse,
+} from "./types";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT;
 
@@ -16,6 +20,14 @@ export const astroloApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    getAppointments: builder.query<[AppointmentResponse], void>({
+      query() {
+        return {
+          url: "",
+          method: "GET",
+        };
+      },
+    }),
     createAppointment: builder.mutation<
       AppointmentBookedResponseType,
       AppointmentBooking
@@ -40,6 +52,7 @@ export const astroloApi = createApi({
 });
 
 export const {
+  useGetAppointmentsQuery,
   useCreateAppointmentMutation,
   useCreateCheckoutSessionMutation,
 } = astroloApi;

@@ -13,9 +13,19 @@ from rest_framework.permissions import IsAuthenticated
 from common.exceptions import ProfileNotFound
 from profiles.models import Profile
 from .models import Appointment
+from .serializers import AppointmentSerializer
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+class AppointmentGetAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        appointments = Appointment.objects.filter(customer=request.user)
+        serializer = AppointmentSerializer(instance=appointments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)     
 
 
 class AppointmentCreateAPIView(APIView):
