@@ -1,6 +1,7 @@
 
 .DS_Store
 
+
 media/
 
 # Byte-compiled / optimized / DLL files
@@ -16,7 +17,7 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-downloads/
+downloads/ 
 eggs/
 .eggs/
 lib/
