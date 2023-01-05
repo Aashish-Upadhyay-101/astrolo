@@ -109,7 +109,7 @@ a:hover {
 }
 
 .btn {
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 500;
   padding: 0.8rem 1.2rem;
   border-radius: 1.2rem;
@@ -128,10 +128,12 @@ a:hover {
 .btn-primary {
   background-color: var(--primary-color-1);
   transition: all 0.3s;
+  color: #fff;
 }
 
 .btn-primary:hover {
   background-color: var(--primary-color-1-hover) !important;
+  color: #fff;
 }
 
 .ant-design-form {
