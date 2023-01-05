@@ -10,8 +10,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from common.exceptions import ProfileNotFound
-from profiles.models import Profile
+from apps.common.exceptions import ProfileNotFound
+from apps.profiles.models import Profile
 from .models import Appointment
 from .serializers import AppointmentSerializer
 

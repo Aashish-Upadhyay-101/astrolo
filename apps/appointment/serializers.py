@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from common.serializers import UserModelSerializer
+from apps.common.serializers import UserModelSerializer
 from .models import Appointment
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Profile, Gender, Reviews
-from common.serializers import UserModelSerializer
+from apps.common.serializers import UserModelSerializer
 from django_countries.serializer_fields import CountryField
 
 

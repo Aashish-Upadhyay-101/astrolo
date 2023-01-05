@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from astrolo.settings import AUTH_USER_MODEL
 from phonenumber_field.modelfields import PhoneNumberField
 from django_countries.fields import CountryField
-from common.models import TimeStampUUIDModel
+from apps.common.models import TimeStampUUIDModel
 
 
 User = get_user_model()

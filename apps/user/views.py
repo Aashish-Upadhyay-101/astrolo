@@ -15,8 +15,8 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
-from common.serializers import UserModelSerializer
-from common.exceptions import UserNotFound
+from apps.common.serializers import UserModelSerializer
+from apps.common.exceptions import UserNotFound
 from .serializers import UserLoginSerializer, UserRegisterSerializer
 
 

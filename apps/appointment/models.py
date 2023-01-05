@@ -1,6 +1,6 @@
 from django.db import models
-from user.models import User
-from common.models import TimeStampUUIDModel
+from apps.user.models import User
+from apps.common.models import TimeStampUUIDModel
 
 
 class AppointmentStatus(models.TextChoices):
