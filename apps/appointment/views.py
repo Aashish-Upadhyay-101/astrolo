@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 import stripe
 
 from django.conf import settings
@@ -17,6 +18,7 @@ from .serializers import AppointmentSerializer
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+webhook_endpoint_secret = settings.STRIPE_WEBHOOK_KEY
 
 
 class AppointmentGetAPIView(APIView):
@@ -42,6 +44,9 @@ class AppointmentCreateAPIView(APIView):
 
         if astrologer_profile.profile_type != "Astrologer":
             return Response({"message": "You can't take appointment with a non astrologer"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if Appointment.objects.filter(customer=request.user, astrologer=astrologer_profile.user).exists():
+            return Response({"message": "You can't book appointment with the same person twice."}, status=status.HTTP_400_BAD_REQUEST)
 
         data = request.data
 
@@ -73,12 +78,15 @@ class CreateCheckoutSession(APIView):
                         "currency": "usd",
                         "product_data": {
                             "name": astrologer_profile.user.username,
-                            "description": "Book an appointment with this astrologer and see your furtunes"
+                            "description": "Book an appointment with this astrologer and see your furtunes",
                         },
                         "unit_amount": astrologer_profile.price * 100,
                     },
                     "quantity": 1,
                 }],
+                metadata = {
+                    
+                },
                 mode = "payment",
                 success_url = "http://localhost:3000/astrologer/checkout/success",
                 cancel_url = "http://localhost:3000/astrologer/checkout/cancel",
@@ -93,27 +101,38 @@ class CreateCheckoutSession(APIView):
 class CheckoutWebHook(APIView):
     def post(self, request, *args, **kwargs):
         event = None
-        payload = request.data 
-        sig_header = request.headers["STRIPE_SIGNATURE"]
-        endpoint_secret = settings.STRIPE_WEBHOOK_KEY
+        payload = request.data
 
-        try:
-            event = stripe.Webhook.construct_event(
-                payload, sig_header, endpoint_secret
-            )
-        except ValueError as e:
-            raise e 
-        except stripe.error.SignatureVerificationError as e:
-            raise e
-        
-        if event["type"] == "payment_intent.succeeded":
-            payment_intent = event["data"]["object"]
+        try: 
+            event = json.loads(payload)
+        except Exception as e:
+            print('⚠️  Webhook error while parsing basic request.' + str(e))
+            return Response(success=False)
+
+        if webhook_endpoint_secret:
+            sig_header = request.headers.get('stripe-signature')
+            try: 
+                event = stripe.Webhook.construct_event(
+                    payload, sig_header, webhook_endpoint_secret
+                )
+            except stripe.error.SignatureVerificationError as e:
+                print('⚠️  Webhook signature verification failed.' + str(e))
+                return Response(success=False)
+
+        # handling event
+        if event and event['type'] == "payment_intent.succeeded":
+            payment_intent = event['data']['object']
+            _handle_successful_payment(payment_intent)
         else:
-            print("Unhandled event type {}".format(event["type"]))
-        
-        return JsonResponse(success=True, safe=False)
+            print('Unhandled event type {}'.format(event['type']))
+
+        return Response(success=True)
+
 
         
+def _handle_successful_payment(payment_intent):
+    ...
+
 
 
 

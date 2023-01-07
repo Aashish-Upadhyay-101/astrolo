@@ -1,8 +1,21 @@
-import { Button, Result } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { Result } from "antd";
 import { Link } from "react-router-dom";
+import { useTriggerPaymentSuccessWebhookQuery } from "../api/astroloApi";
 
 const PaymentSuccess = () => {
+  const { data, isError, error } = useTriggerPaymentSuccessWebhookQuery();
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+
+    if (data) {
+      console.log(data);
+    }
+  }, [isError, error, data]);
+
   return (
     <Result
       style={{ marginTop: "8.2rem" }}

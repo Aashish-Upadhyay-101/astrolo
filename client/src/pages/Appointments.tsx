@@ -53,7 +53,11 @@ const Appointments = () => {
     if (appointmentIsError) {
       navigate("/page-not-found");
     }
-  }, [appointmentIsError]);
+
+    if (CreateAppointmentIsError) {
+      console.log(CreateAppointmentError);
+    }
+  }, [appointmentIsError, CreateAppointmentIsError, CreateAppointmentError]);
 
   // stripe integration redirection
   useEffect(() => {

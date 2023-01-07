@@ -71,9 +71,9 @@ const Navbar: React.FC = () => {
               </li>
             </Tooltip>
             <Tooltip title="dashboard" color="var(--primary-color-1)">
-              <Link to="/dashboard" className="navbar__right-link">
+              <a href="/dashboard" className="navbar__right-link">
                 <SnippetsOutlined className="normal-icon" />
-              </Link>
+              </a>
             </Tooltip>
             <li className="navbar__right-link">
               <Badge count={4} size="small">

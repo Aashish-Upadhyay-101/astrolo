@@ -48,6 +48,15 @@ export const astroloApi = createApi({
         };
       },
     }),
+    triggerPaymentSuccessWebhook: builder.query<void, void>({
+      query() {
+        return {
+          url: "checkout/webhook-test/",
+          method: "POST",
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
@@ -55,4 +64,5 @@ export const {
   useGetAppointmentsQuery,
   useCreateAppointmentMutation,
   useCreateCheckoutSessionMutation,
+  useTriggerPaymentSuccessWebhookQuery,
 } = astroloApi;
