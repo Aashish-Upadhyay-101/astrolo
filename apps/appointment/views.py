@@ -85,12 +85,13 @@ class CreateCheckoutSession(APIView):
                     "quantity": 1,
                 }],
                 metadata = {
-                    
+                    "appointment_id": Appointment.objects.get(customer=request.user, astrologer=astrologer_profile.user).id
                 },
                 mode = "payment",
                 success_url = "http://localhost:3000/astrologer/checkout/success",
                 cancel_url = "http://localhost:3000/astrologer/checkout/cancel",
             )
+            print(checkout_session) # testing purpose
             return Response(checkout_session.url)
         except Exception as e:
             print("error occor")
@@ -101,37 +102,36 @@ class CreateCheckoutSession(APIView):
 class CheckoutWebHook(APIView):
     def post(self, request, *args, **kwargs):
         event = None
-        payload = request.data
-
-        try: 
-            event = json.loads(payload)
-        except Exception as e:
-            print('⚠️  Webhook error while parsing basic request.' + str(e))
-            return Response(success=False)
+        payload = request.body.decode("utf-8")
 
         if webhook_endpoint_secret:
-            sig_header = request.headers.get('stripe-signature')
+            sig_header = request.headers.get("stripe-signature")
             try: 
                 event = stripe.Webhook.construct_event(
                     payload, sig_header, webhook_endpoint_secret
                 )
+                
             except stripe.error.SignatureVerificationError as e:
                 print('⚠️  Webhook signature verification failed.' + str(e))
-                return Response(success=False)
+                return Response(False)
 
         # handling event
-        if event and event['type'] == "payment_intent.succeeded":
-            payment_intent = event['data']['object']
-            _handle_successful_payment(payment_intent)
-        else:
-            print('Unhandled event type {}'.format(event['type']))
+        if event and event['type'] == "checkout.session.completed":
+            checkout_session = event['data']['object']
+            _handle_successful_payment(checkout_session.metadata)
+        # else:
+        #     print('Unhandled event type {}'.format(event['type']))
 
-        return Response(success=True)
-
+        return Response(True)
 
         
-def _handle_successful_payment(payment_intent):
-    ...
+def _handle_successful_payment(metadata):
+    appointment_id = metadata.get("appointment_id")
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.payment = True
+    appointment.save()
+
+
 
 
 

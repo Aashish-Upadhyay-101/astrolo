@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 import { useTriggerPaymentSuccessWebhookQuery } from "../api/astroloApi";
 
 const PaymentSuccess = () => {
-  const { data, isError, error } = useTriggerPaymentSuccessWebhookQuery();
+  // const { data, isError, error } = useTriggerPaymentSuccessWebhookQuery();
 
-  useEffect(() => {
-    if (isError) {
-      console.log(error);
-    }
+  // useEffect(() => {
+  //   if (isError) {
+  //     console.log(error);
+  //   }
 
-    if (data) {
-      console.log(data);
-    }
-  }, [isError, error, data]);
+  //   if (data) {
+  //     console.log(data);
+  //   }
+  // }, [isError, error, data]);
 
   return (
     <Result
