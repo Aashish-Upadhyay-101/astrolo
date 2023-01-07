@@ -1,9 +1,7 @@
 from datetime import datetime
-import json
 import stripe
 
 from django.conf import settings
-from django.http import JsonResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -119,9 +117,7 @@ class CheckoutWebHook(APIView):
         if event and event['type'] == "checkout.session.completed":
             checkout_session = event['data']['object']
             _handle_successful_payment(checkout_session.metadata)
-        # else:
-        #     print('Unhandled event type {}'.format(event['type']))
-
+    
         return Response(True)
 
         
