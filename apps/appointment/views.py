@@ -2,6 +2,7 @@ from datetime import datetime
 import stripe
 
 from django.conf import settings
+from django.db.models import Q 
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -23,10 +24,13 @@ class AppointmentGetAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        appointments = Appointment.objects.filter(customer=request.user)
-        serializer = AppointmentSerializer(instance=appointments, many=True)
+        appointments = Appointment.objects.filter(Q(customer=request.user) | Q(astrologer=request.user))
+        serializer = AppointmentSerializer(instance=appointments, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)     
 
+    def patch(self, request, *args, **kwargs):
+        # appointment 
+        ...
 
 class AppointmentCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -126,6 +130,7 @@ def _handle_successful_payment(metadata):
     appointment = Appointment.objects.get(id=appointment_id)
     appointment.payment = True
     appointment.save()
+
 
 
 

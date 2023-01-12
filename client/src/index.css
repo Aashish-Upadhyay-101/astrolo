@@ -131,6 +131,11 @@ a:hover {
   color: #fff;
 }
 
+.ant-btn-default {
+  background-color: var(--primary-color-1);
+  color: #fff;
+}
+
 .btn-primary:hover {
   background-color: var(--primary-color-1-hover) !important;
   color: #fff;
@@ -214,4 +219,34 @@ a:hover {
 
 .normal-icon {
   font-size: 2rem;
+}
+
+.btn-success {
+  background-color: #077e8c !important;
+  color: #fff !important;
+  transition: all 0.3s;
+}
+
+.btn-danger {
+  background-color: #d80000 !important;
+  color: #fff !important;
+  transition: all 0.3s;
+}
+.btn-success:hover {
+  background-color: #066570 !important;
+  color: #fff !important;
+}
+
+.btn-danger:hover {
+  background-color: #b40606 !important;
+  color: #fff !important;
+}
+
+.btn-normal {
+  background-color: #fff;
+  color: var(--text-color-1);
+}
+.btn-normal:hover {
+  background-color: #fff !important;
+  color: var(--text-color-1) !important;
 }

@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Navbar from "../Components/Navbar";
 import { Badge, Table } from "antd";
+import { Button, Modal } from "antd";
 import { useGetAppointmentsQuery } from "../api/astroloApi";
+import { useGetMeQuery } from "../api/userApi";
 
 const columns = [
   {
-    title: "Astrologer's name",
+    title: "Client's Name",
     dataIndex: "name",
     key: "name",
   },
@@ -33,16 +35,28 @@ const columns = [
 ];
 
 const Dashboard = () => {
-  let { data, isError, error } = useGetAppointmentsQuery();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clientNameOnModal, setClientNameOnModal] = useState("");
+
+  let {
+    data: getAppointmentData,
+    isError: getAppointmentIsError,
+    error: getAppointmentError,
+  } = useGetAppointmentsQuery();
+  const {
+    data: getMeData,
+    isError: getMeIsError,
+    error: getMeError,
+  } = useGetMeQuery();
 
   useEffect(() => {
-    if (isError) {
-      console.log(error);
+    if (getMeIsError) {
+      console.log(getMeError);
     }
-    if (data) {
-      console.log(data);
+    if (getAppointmentData) {
+      console.log(getAppointmentData);
     }
-  }, [isError, error]);
+  }, [getMeIsError, getMeError, getMeData]);
 
   const returnStatusColor = (status: string): string => {
     if (status == "pending") {
@@ -54,10 +68,13 @@ const Dashboard = () => {
     }
   };
 
-  const source = data?.map((item, index) => {
+  const source = getAppointmentData?.map((item, index) => {
     return {
       key: index,
-      name: item.astrologer.username,
+      name:
+        getMeData?.profile_type == "Astrologer"
+          ? item.customer.username
+          : item.astrologer.username,
       start_date: new Date(item.start_date).toDateString().slice(4),
       start_time: item.start_time,
       location: item.location,
@@ -71,6 +88,22 @@ const Dashboard = () => {
     };
   });
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleApproved = () => {};
+
+  const handleDeny = () => {};
+
   return (
     <>
       <Navbar />
@@ -78,9 +111,41 @@ const Dashboard = () => {
         <h1 className="dashboard__h1 text-2">Dashboard</h1>
         <div className="table">
           <h2 className="table__header text-1">Appointments</h2>
-          <Table dataSource={source} columns={columns} />;
+          <Table
+            dataSource={source}
+            columns={columns}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  showModal();
+                  setClientNameOnModal(record.name);
+                },
+              };
+            }}
+          />
         </div>
       </div>
+
+      {getMeData?.profile_type == "Astrologer" && (
+        <Modal
+          title="Appointment Detail"
+          open={isModalOpen}
+          onCancel={handleCancel}
+          footer={[
+            <Button className="btn-normal" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button className="btn-success" onClick={handleApproved}>
+              Approved
+            </Button>,
+            <Button className="btn-danger" onClick={handleDeny}>
+              Deny
+            </Button>,
+          ]}
+        >
+          <p>Appointment with {clientNameOnModal}. Would like to accept?</p>
+        </Modal>
+      )}
     </>
   );
 };
