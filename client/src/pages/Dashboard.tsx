@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Navbar from "../Components/Navbar";
-import { Badge, Table } from "antd";
+import { Badge, Table, message } from "antd";
 import { Button, Modal } from "antd";
-import { useGetAppointmentsQuery } from "../api/astroloApi";
+import {
+  useGetAppointmentsQuery,
+  useUpdateAppointmentStatusMutation,
+} from "../api/astroloApi";
 import { useGetMeQuery } from "../api/userApi";
 
 const columns = [
@@ -37,17 +40,17 @@ const columns = [
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientNameOnModal, setClientNameOnModal] = useState("");
+  const [status, setStatus] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
-  let {
-    data: getAppointmentData,
-    isError: getAppointmentIsError,
-    error: getAppointmentError,
-  } = useGetAppointmentsQuery();
+  let { data: getAppointmentData } = useGetAppointmentsQuery();
   const {
     data: getMeData,
     isError: getMeIsError,
     error: getMeError,
   } = useGetMeQuery();
+
+  const [UpdateAppointment] = useUpdateAppointmentStatusMutation();
 
   useEffect(() => {
     if (getMeIsError) {
@@ -81,8 +84,8 @@ const Dashboard = () => {
       status: (
         <Badge
           style={{ fontWeight: "600" }}
-          color={`${returnStatusColor(item.status)}`}
-          count={`${item.status}`}
+          color={`${returnStatusColor(status || item.status)}`}
+          count={`${status || item.status}`}
         />
       ),
     };
@@ -100,12 +103,41 @@ const Dashboard = () => {
     setIsModalOpen(false);
   };
 
-  const handleApproved = () => {};
+  const handleApproved = () => {
+    setStatus("approved");
+    setClientNameOnModal(clientNameOnModal);
+    UpdateAppointment({
+      status: "approved",
+      username: clientNameOnModal,
+    });
+    setIsModalOpen(false);
 
-  const handleDeny = () => {};
+    // notification message
+    messageApi.open({
+      type: "success",
+      content: "Appointment booked!",
+    });
+  };
+
+  const handleDeny = () => {
+    setStatus("cancelled");
+    setClientNameOnModal(clientNameOnModal);
+    UpdateAppointment({
+      status: "cancelled",
+      username: clientNameOnModal,
+    });
+    setIsModalOpen(false);
+
+    // notification message
+    messageApi.open({
+      type: "error",
+      content: "Appointment cancelled!",
+    });
+  };
 
   return (
     <>
+      {contextHolder}
       <Navbar />
       <div className="dashboard">
         <h1 className="dashboard__h1 text-2">Dashboard</h1>

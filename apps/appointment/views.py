@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.common.exceptions import ProfileNotFound
 from apps.profiles.models import Profile
+from apps.user.models import User
 from .models import Appointment
 from .serializers import AppointmentSerializer
 
@@ -28,9 +29,18 @@ class AppointmentGetAPIView(APIView):
         serializer = AppointmentSerializer(instance=appointments, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)     
 
-    def patch(self, request, *args, **kwargs):
-        # appointment 
-        ...
+
+class AppointmentUpdateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, username, *args, **kwargs):
+        customer = User.objects.get(username=username)
+        appointment = Appointment.objects.get(customer=customer, astrologer=request.user)
+        serializer = AppointmentSerializer(instance=appointment, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "Appointment updated"}, status=status.HTTP_200_OK)
+        
 
 class AppointmentCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]

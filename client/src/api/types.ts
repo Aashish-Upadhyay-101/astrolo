@@ -83,3 +83,8 @@ export interface AppointmentBooking {
   start_date: string;
   start_time: string;
 }
+
+export interface AppointmentUpdate {
+  username: string;
+  status: string;
+}

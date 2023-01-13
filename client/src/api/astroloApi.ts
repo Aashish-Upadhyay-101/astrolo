@@ -4,6 +4,7 @@ import {
   AppointmentBookedResponseType,
   AppointmentBooking,
   AppointmentResponse,
+  AppointmentUpdate,
 } from "./types";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT;
@@ -57,6 +58,17 @@ export const astroloApi = createApi({
         };
       },
     }),
+    updateAppointmentStatus: builder.mutation<any, AppointmentUpdate>({
+      query(updateData) {
+        return {
+          url: `update-appointment/${updateData.username}/`,
+          method: "PATCH",
+          body: {
+            status: updateData.status,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -65,4 +77,5 @@ export const {
   useCreateAppointmentMutation,
   useCreateCheckoutSessionMutation,
   useTriggerPaymentSuccessWebhookQuery,
+  useUpdateAppointmentStatusMutation,
 } = astroloApi;
