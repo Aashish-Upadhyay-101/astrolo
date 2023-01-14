@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'apps.profiles',
     'apps.appointment',
     'apps.common',
+    'apps.chat',
     'django_countries',
     'phonenumber_field',
 ]
@@ -85,6 +87,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'astrolo.wsgi.application'
+ASGI_APPLICATION = 'astrolo.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 
 # Database
