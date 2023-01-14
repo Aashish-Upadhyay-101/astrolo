@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Navbar from "../Components/Navbar";
 import { Badge, Table, message } from "antd";
-import { Button, Modal } from "antd";
+import { Button, Modal, notification } from "antd";
 import {
   useGetAppointmentsQuery,
   useUpdateAppointmentStatusMutation,
@@ -41,7 +41,9 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientNameOnModal, setClientNameOnModal] = useState("");
   const [status, setStatus] = useState("");
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, messageContextHolder] = message.useMessage();
+  const [notificationApi, notificationContextHolder] =
+    notification.useNotification();
 
   let { data: getAppointmentData } = useGetAppointmentsQuery();
   const {
@@ -117,6 +119,12 @@ const Dashboard = () => {
       type: "success",
       content: "Appointment booked!",
     });
+
+    notificationApi.open({
+      message: "Message",
+      description: `A chat inbox is created between you and ${clientNameOnModal}`,
+      placement: "bottomRight",
+    });
   };
 
   const handleDeny = () => {
@@ -137,7 +145,8 @@ const Dashboard = () => {
 
   return (
     <>
-      {contextHolder}
+      {messageContextHolder}
+      {notificationContextHolder}
       <Navbar />
       <div className="dashboard">
         <h1 className="dashboard__h1 text-2">Dashboard</h1>
