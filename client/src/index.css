@@ -32,9 +32,9 @@ body {
   --primary-color-2-dim: #7109b722;
   --primary-color-2-hover: #560889;
   --primary-color-3: #3a0ca3;
+  --primary-color-3-chat-sender: #390ca326;
   --primary-color-4: #4361ee;
   --primary-color-5: #4cc9f0;
-
   --text-color-1: #0c0221;
   --text-color-2: #868190;
   --text-color-3: #9e9aa6;
@@ -147,6 +147,18 @@ a:hover {
 
 .site-form-item-icon {
   color: var(--primary-color-1);
+}
+
+.primary-icon {
+  color: var(--primary-color-1);
+  padding: 1.2rem;
+  border-radius: 100%;
+  transition: all 0.3s;
+}
+
+.primary-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {

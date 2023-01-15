@@ -13,6 +13,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import Dashboard from "./pages/Dashboard";
+import ChatBox from "./pages/ChatBox";
 
 const stripe_key = process.env.REACT_APP_STRIPE_KEY || "";
 const stripePromise = loadStripe(stripe_key);
@@ -28,6 +29,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/chats" element={<ChatBox />} />
             <Route
               path="/auth/activate-link/:username"
               element={<ActivateAccount />}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import { useGetAllAstrologersQuery } from "../api/userApi";
 import { getAccessToken } from "../helpers/localStorageHandler";
@@ -10,7 +10,6 @@ const AstroloHome = () => {
 
   return (
     <>
-      <Navbar />
       <div className="container">
         <div className="astrologer__container">
           {data?.map((astrologer) => (
