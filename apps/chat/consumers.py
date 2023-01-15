@@ -2,6 +2,10 @@ from channels.generic.websocket import JsonWebsocketConsumer
 
 
 class ChatConsumer(JsonWebsocketConsumer):
+    """
+    This is consumer to show online status and send notification
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.room_name = None
@@ -25,4 +29,6 @@ class ChatConsumer(JsonWebsocketConsumer):
         print(content)
         return super().receive_json(content, **kwargs)
 
+
         
+
