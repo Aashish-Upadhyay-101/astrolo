@@ -10,6 +10,7 @@ const AstroloHome = () => {
 
   return (
     <>
+      <Navbar />
       <div className="container">
         <div className="astrologer__container">
           {data?.map((astrologer) => (

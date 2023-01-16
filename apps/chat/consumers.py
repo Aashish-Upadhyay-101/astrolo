@@ -1,7 +1,6 @@
 from channels.generic.websocket import JsonWebsocketConsumer
 from asgiref.sync import async_to_sync
 
-
 class ChatConsumer(JsonWebsocketConsumer):
     """
     This is consumer to show online status and send notification
@@ -10,11 +9,18 @@ class ChatConsumer(JsonWebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.room_name = None
+        self.user = None
 
     def connect(self):
         print("Connected!")
         self.room_name = "home"
         self.accept()
+
+        # setting and checking user 
+        self.user = self.scope["user"]
+        if not self.user.is_authenticated:
+            return 
+
         async_to_sync(self.channel_layer.group_add)(
             self.room_name,
             self.channel_name,

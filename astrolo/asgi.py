@@ -14,6 +14,7 @@ import sys
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from apps.chat.routing import websocket_urlpatterns
+from .middleware import TokenAuthMiddleware
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
 sys.path.append(str(ROOT_DIR / "chat"))
@@ -26,5 +27,5 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'astrolo.settings')
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,
-    "websocket": URLRouter(websocket_urlpatterns),
+    "websocket":TokenAuthMiddleware(URLRouter(websocket_urlpatterns)),
 })

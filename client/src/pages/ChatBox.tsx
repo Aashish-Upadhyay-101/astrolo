@@ -7,30 +7,44 @@ import {
   SendOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Input } from "antd";
+import { getAccessToken } from "../helpers/localStorageHandler";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 const ChatBox = () => {
+  const userToken = useSelector<RootState>((state) => state.authState.token);
   const [message, setMessage] = useState("");
-  const [messageHistory, setMessageHistory] = useState<any>([]);
-  const { readyState, sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/", {
-    onOpen: () => {
-      console.log("Connected");
-    },
-    onClose: () => {
-      console.log("Disconnected");
-    },
-    onMessage: (e: MessageEvent<any>) => {
-      const data = JSON.parse(e.data);
-      switch (data.type) {
-        case "chat_message_echo":
-          setMessageHistory((prev: any) => prev.concat(data));
-          break;
-        default:
-          console.log("Not valid type!");
-          break;
-      }
-    },
-  });
+  const [welcomeMessage, setWelcomeMessage] = useState("");
+  const [messageHistory, setMessageHistory] = useState([]);
+  const { readyState, sendJsonMessage } = useWebSocket(
+    userToken ? "ws://127.0.0.1:8000/" : null,
+    {
+      queryParams: {
+        token: getAccessToken() ? getAccessToken() : "",
+      },
+
+      onOpen: () => {
+        console.log("Connected");
+      },
+      onClose: () => {
+        console.log("Disconnected");
+      },
+      onMessage: (e: MessageEvent<any>) => {
+        const data = JSON.parse(e.data);
+        switch (data.type) {
+          case "chat_message_echo":
+            setMessageHistory((prev: any) => prev.concat(data));
+            break;
+          case "welcome_message":
+            setWelcomeMessage(data.message);
+            break;
+          default:
+            console.log("Not valid type!");
+            break;
+        }
+      },
+    }
+  );
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
@@ -42,12 +56,13 @@ const ChatBox = () => {
 
   const messageSendHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    sendJsonMessage({
-      type: "chat_message",
-      name: "aashish-test",
-      message: message,
-    });
-    messageHistory.map((message: any) => console.log(message.message));
+    if (message !== "") {
+      sendJsonMessage({
+        type: "chat_message",
+        name: "aashish-test",
+        message: message,
+      });
+    }
 
     setMessage("");
   };
@@ -106,7 +121,11 @@ const ChatBox = () => {
             </div>
             <div className="message-receiver">Hello world</div>
             {messageHistory.map((message: any, index: number) => {
-              <div className="message-receiver">{message.message}</div>;
+              return (
+                <div key={index} className="message-receiver">
+                  {message.message}
+                </div>
+              );
             })}
             {/* to here  */}
           </div>
