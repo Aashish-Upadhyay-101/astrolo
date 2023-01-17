@@ -17,7 +17,7 @@ const ChatBox = () => {
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [messageHistory, setMessageHistory] = useState([]);
   const { readyState, sendJsonMessage } = useWebSocket(
-    userToken ? "ws://127.0.0.1:8000/" : null,
+    userToken ? "ws://127.0.0.1:8000/Aashish__test/" : null,
     {
       queryParams: {
         token: getAccessToken() ? getAccessToken() : "",
