@@ -8,6 +8,7 @@ import {
   useUpdateAppointmentStatusMutation,
 } from "../api/astroloApi";
 import { useGetMeQuery } from "../api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -38,6 +39,7 @@ const columns = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientNameOnModal, setClientNameOnModal] = useState("");
   const [status, setStatus] = useState("");
@@ -45,6 +47,8 @@ const Dashboard = () => {
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
 
+  const { data: getMyDetailData, isError: getMyDetailIsError } =
+    useGetMeQuery();
   let { data: getAppointmentData } = useGetAppointmentsQuery();
   const {
     data: getMeData,

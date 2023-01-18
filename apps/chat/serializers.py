@@ -46,6 +46,5 @@ class ConversationSerializer(serializers.ModelSerializer):
 
         for username in usernames:
             if username != self.context['user'].username:
-                print(username)
                 other_user = Profile.objects.get(user__username=username)
                 return ProfileSerializer(instance=other_user).data

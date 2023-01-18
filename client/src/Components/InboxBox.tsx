@@ -1,5 +1,10 @@
 import React from "react";
 
+interface PropType {
+  other_user: string;
+  last_message: string;
+}
+
 const InboxBox = () => {
   return (
     <div className="inbox-box">
@@ -9,8 +14,8 @@ const InboxBox = () => {
         alt="pp"
       />
       <div className="inbox-box__info">
-        <p className="inbox-box__info-name">Aashish Upadhyay</p>
-        <p className="inbox-box__info-message">Hello Test how are you?</p>
+        <p className="inbox-box__info-name">Aashish101</p>
+        <p className="inbox-box__info-message">whats up?</p>
       </div>
     </div>
   );

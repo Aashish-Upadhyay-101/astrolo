@@ -28,6 +28,23 @@ export interface UserType {
   price: number;
 }
 
+export interface MessageInterface {
+  id: string;
+  from_user: UserType;
+  to_user: UserType;
+  conversation: string;
+  content: string;
+  read: boolean;
+  created_at: string;
+}
+
+export interface ConversationListInterface {
+  id: string;
+  name: string;
+  last_message: MessageInterface;
+  other_user: UserType;
+}
+
 export interface AppointmentResponse {
   customer: {
     id: string;

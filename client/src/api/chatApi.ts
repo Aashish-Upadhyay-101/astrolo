@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
+import { ConversationListInterface } from "./types";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT;
 
@@ -15,7 +16,7 @@ export const chatApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getConversations: builder.query({
+    getConversations: builder.query<[ConversationListInterface], void>({
       query() {
         return {
           url: "conversation/",
