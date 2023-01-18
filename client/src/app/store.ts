@@ -4,6 +4,7 @@ import { userApi } from "../api/userApi";
 import { astroloApi } from "../api/astroloApi";
 import authReducer from "../features/auth/authSlice";
 import profileReducer from "../features/astrolo/profileSlice";
+import { chatApi } from "../api/chatApi";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [astroloApi.reducerPath]: astroloApi.reducer,
+    [chatApi.reducerPath]: chatApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -19,6 +21,7 @@ export const store = configureStore({
       userApi.middleware,
       authApi.middleware,
       astroloApi.middleware,
+      chatApi.middleware,
     ]),
 });
 
