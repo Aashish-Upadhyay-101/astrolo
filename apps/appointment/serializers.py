@@ -11,6 +11,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
         model = Appointment
         fields = "__all__"
 
+
     def get_location(self, obj):
         if self.context['request'].user.profile.profile_type == "Astrologer":
             return f"{obj.customer.profile.city}, {obj.customer.profile.country}"

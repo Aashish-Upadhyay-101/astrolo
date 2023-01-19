@@ -47,8 +47,8 @@ const Dashboard = () => {
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
 
-  const { data: getMyDetailData, isError: getMyDetailIsError } =
-    useGetMeQuery();
+  // const { data: getMyDetailData, isError: getMyDetailIsError } =
+  //   useGetMeQuery();
   let { data: getAppointmentData } = useGetAppointmentsQuery();
   const {
     data: getMeData,
@@ -109,6 +109,11 @@ const Dashboard = () => {
     setIsModalOpen(false);
   };
 
+  const createConversationName = (username: string) => {
+    const name = [clientNameOnModal, username].sort();
+    return `${name[0]}__${name[1]}`;
+  };
+
   const handleApproved = () => {
     setStatus("approved");
     setClientNameOnModal(clientNameOnModal);
@@ -129,6 +134,12 @@ const Dashboard = () => {
       description: `A chat inbox is created between you and ${clientNameOnModal}`,
       placement: "bottomRight",
     });
+
+    navigate(
+      `/dashboard/chats/${createConversationName(
+        getMeData?.user.username || ""
+      )}`
+    );
   };
 
   const handleDeny = () => {

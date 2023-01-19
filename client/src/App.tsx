@@ -29,7 +29,10 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/chats" element={<ChatBox />} />
+            <Route
+              path="/dashboard/chats/:conversationName"
+              element={<ChatBox />}
+            />
             <Route
               path="/auth/activate-link/:username"
               element={<ActivateAccount />}

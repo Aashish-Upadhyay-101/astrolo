@@ -44,7 +44,7 @@ class ChatConsumer(JsonWebsocketConsumer):
             self.channel_name,
         )
 
-        messages = Message.objects.all().order_by("created_at")[0: 50]
+        messages = Message.objects.filter(conversation__name=self.conversation_name).order_by("created_at")[0: 50]
         self.send_json({
             "type": "last_50_messages",
             "messages": MessageSerializer(messages, many=True).data

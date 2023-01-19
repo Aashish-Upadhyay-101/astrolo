@@ -29,7 +29,7 @@ const items: MenuProps["items"] = [
   },
 ];
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const token = useSelector<RootState>(
     (state) => state.authState.token?.access
   );
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
                 <SnippetsOutlined className="normal-icon" />
               </a>
             </Tooltip>
-            <Link to="/dashboard/chats" className="navbar__right-link">
+            <Link to={`/dashboard/chats/test`} className="navbar__right-link">
               <Badge count={4} size="small">
                 <MessageOutlined className="normal-icon" />
               </Badge>
