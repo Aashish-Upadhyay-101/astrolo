@@ -1,19 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import ActivateAccount from "./pages/ActivateAccount";
-import AstroloHome from "./pages/AstroloHome";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import ActivateAccount from "./pages/ActivateAccount/ActivateAccount";
+import AstroloHome from "./pages/AstroloHome/AstroloHome";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
 import PageNotFound from "./pages/PageNotFound";
-import Signup from "./pages/Signup";
-import AstrolgoerProfileDetail from "./pages/AstrolgoerProfileDetail";
-import Appointments from "./pages/Appointments";
+import Signup from "./pages/Signup/Signup";
+import AstrolgoerProfileDetail from "./pages/AstrologerProfileDetail/AstrologerProfileDetail";
+import Appointments from "./pages/Appointments/Appointments";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
-import Dashboard from "./pages/Dashboard";
-import ChatBox from "./pages/ChatBox";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import ChatBox from "./pages/ChatBox/ChatBox";
 
 const stripe_key = process.env.REACT_APP_STRIPE_KEY || "";
 const stripePromise = loadStripe(stripe_key);

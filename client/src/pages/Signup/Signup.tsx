@@ -5,8 +5,8 @@ import { Button, Form, Input } from "antd";
 import {
   useRegisterUserMutation,
   useSendVerificationEmailMutation,
-} from "../api/authApi";
-import "../Components/Navbar.css";
+} from "../../api/authApi";
+import "../components/Navbar.css";
 import "./Signup.css";
 
 const Signup: React.FC = () => {

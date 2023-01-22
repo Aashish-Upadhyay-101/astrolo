@@ -4,13 +4,13 @@ import { Image, Rate } from "antd";
 import {
   useGetAstrologerDetailsQuery,
   useGetAstrologerReviewsQuery,
-} from "../api/userApi";
-import Navbar from "../Components/Navbar";
-import BookAppointmentBox from "../Components/BookAppointmentBox";
+} from "../../api/userApi";
+import Navbar from "../../components/Navbar/Navbar";
+import BookAppointmentBox from "../../components/BookAppointmentBox/BookAppointmentBox";
 import "./AstrolgoerProfileDetail.css";
-import Review from "../Components/Review";
+import Review from "../../components/Review/Review";
 
-const AstrolgoerProfileDetail = () => {
+const AstrologerProfileDetail = () => {
   const [showMore, setShowMore] = useState(false);
 
   const { username } = useParams();
@@ -101,4 +101,4 @@ const AstrolgoerProfileDetail = () => {
   );
 };
 
-export default AstrolgoerProfileDetail;
+export default AstrologerProfileDetail;

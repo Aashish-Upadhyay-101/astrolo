@@ -10,13 +10,13 @@ import {
   Input,
   TimePicker,
 } from "antd";
-import { useGetAstrologerDetailsQuery } from "../api/userApi";
+import { useGetAstrologerDetailsQuery } from "../../api/userApi";
 import {
   useCreateAppointmentMutation,
   useCreateCheckoutSessionMutation,
-} from "../api/astroloApi";
+} from "../../api/astroloApi";
 import "./Appointments.css";
-import Navbar from "../Components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import "../index.css";
 import moment from "moment";
 

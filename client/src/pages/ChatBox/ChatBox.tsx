@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./ChatBox.css";
-import InboxBox from "../Components/InboxBox";
+import InboxBox from "../../components/InboxBox";
 import {
   PhoneOutlined,
   SendOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
-import { useGetConversationsQuery } from "../api/chatApi";
-import { useGetMeQuery } from "../api/userApi";
+import { RootState } from "../../app/store";
+import { useGetConversationsQuery } from "../../api/chatApi";
+import { useGetMeQuery } from "../../api/userApi";
 import { useParams } from "react-router-dom";
-import { getAccessToken } from "../helpers/localStorageHandler";
-import { MessageInterface } from "../api/types";
+import { getAccessToken } from "../../helpers/localStorageHandler";
+import { MessageInterface } from "../../api/types";
 
 const ChatBox = () => {
   const userToken = useSelector<RootState>((state) => state.authState.token);
   const [message, setMessage] = useState("");
-  const [otherUserName, setOtherUsername] = useState("");
   const [messageHistory, setMessageHistory] = useState([
     {} as MessageInterface,
   ]);
@@ -55,14 +54,6 @@ const ChatBox = () => {
       },
     }
   );
-
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[readyState];
 
   const messageSendHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -102,9 +93,7 @@ const ChatBox = () => {
                 src="https://picsum.photos/300/300"
                 alt="pp"
               />
-              <p className="inbox-box__info-name">
-                {messageHistory[0]?.from_user?.user.username}
-              </p>
+              <p className="inbox-box__info-name">Hello test user</p>
             </div>
             <div className="message-box__header-right">
               <PhoneOutlined className="normal-icon primary-icon" />
@@ -113,15 +102,6 @@ const ChatBox = () => {
           </div>
           <div className="message-box__message-area">
             {/* from here  */}
-            {/* <div className="message-sender">
-              <img
-                className="message-box-img"
-                src="https://picsum.photos/300/300"
-                alt="pp"
-              />
-              <p>Hello aashish how are you man !</p>
-            </div>
-            <div className="message-receiver">Hello world</div> */}
 
             {messageHistory.map((message) => (
               <>

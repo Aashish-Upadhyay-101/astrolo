@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import Navbar from "../Components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import { Badge, Table, message } from "antd";
 import { Button, Modal, notification } from "antd";
 import {
   useGetAppointmentsQuery,
   useUpdateAppointmentStatusMutation,
-} from "../api/astroloApi";
-import { useGetMeQuery } from "../api/userApi";
+} from "../../api/astroloApi";
+import { useGetMeQuery } from "../../api/userApi";
 import { useNavigate } from "react-router-dom";
 
 const columns = [

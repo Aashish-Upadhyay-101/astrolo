@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Navbar from "../Components/Navbar";
-import { useGetAllAstrologersQuery } from "../api/userApi";
-import { getAccessToken } from "../helpers/localStorageHandler";
-import AstrologerItem from "../Components/AstrologerItem";
+import Navbar from "../../components/Navbar/Navbar";
+import { useGetAllAstrologersQuery } from "../../api/userApi";
+import { getAccessToken } from "../../helpers/localStorageHandler";
+import AstrologerItem from "../../components/AstrologerItem/AstrologerItem";
 import "./AstroloHome.css";
 
 const AstroloHome = () => {
