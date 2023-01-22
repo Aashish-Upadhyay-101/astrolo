@@ -85,57 +85,60 @@ const ChatBox = () => {
           })}
         </div>
       </div>
-
-      <div className="chats__left">
-        <div className="chats__left__message-box">
-          <div className="message-box__header">
-            <div className="message-box__header-left">
-              <img
-                className="message-box-img"
-                src="https://picsum.photos/300/300"
-                alt="pp"
+      {params.conversationName != "test" ? (
+        <div className="chats__left">
+          <div className="chats__left__message-box">
+            <div className="message-box__header">
+              <div className="message-box__header-left">
+                <img
+                  className="message-box-img"
+                  src="https://picsum.photos/300/300"
+                  alt="pp"
+                />
+                <p className="inbox-box__info-name">{otherUser}</p>
+              </div>
+              <div className="message-box__header-right">
+                <PhoneOutlined className="normal-icon primary-icon" />
+                <VideoCameraOutlined className="normal-icon primary-icon" />
+              </div>
+            </div>
+            <div className="message-box__message-area">
+              {/* from here  */}
+              {messageHistory.map((message) => (
+                <>
+                  {message?.from_user?.user.username ==
+                  getMeData?.user.username ? (
+                    <div className="message-receiver">{message?.content}</div>
+                  ) : (
+                    <div className="message-sender">
+                      <img
+                        className="message-box-img"
+                        src="https://picsum.photos/300/300"
+                        alt="pp"
+                      />
+                      <p>{message?.content}</p>
+                    </div>
+                  )}
+                </>
+              ))}
+              {/* to here  */}
+            </div>
+            <form className="message-box__input" onSubmit={messageSendHandler}>
+              <input
+                type="text"
+                placeholder="write your message..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
-              <p className="inbox-box__info-name">{otherUser}</p>
-            </div>
-            <div className="message-box__header-right">
-              <PhoneOutlined className="normal-icon primary-icon" />
-              <VideoCameraOutlined className="normal-icon primary-icon" />
-            </div>
+              <button type="submit" className="message-send-btn">
+                <SendOutlined className="normal-icon primary-icon" />
+              </button>
+            </form>
           </div>
-          <div className="message-box__message-area">
-            {/* from here  */}
-            {messageHistory.map((message) => (
-              <>
-                {message?.from_user?.user.username ==
-                getMeData?.user.username ? (
-                  <div className="message-receiver">{message?.content}</div>
-                ) : (
-                  <div className="message-sender">
-                    <img
-                      className="message-box-img"
-                      src="https://picsum.photos/300/300"
-                      alt="pp"
-                    />
-                    <p>{message?.content}</p>
-                  </div>
-                )}
-              </>
-            ))}
-            {/* to here  */}
-          </div>
-          <form className="message-box__input" onSubmit={messageSendHandler}>
-            <input
-              type="text"
-              placeholder="write your message..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button type="submit" className="message-send-btn">
-              <SendOutlined className="normal-icon primary-icon" />
-            </button>
-          </form>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
