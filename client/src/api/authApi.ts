@@ -6,7 +6,7 @@ import {
 } from "./types";
 import { userApi } from "./userApi";
 import { setToken } from "../features/auth/authSlice";
-import { setTokenLocal } from "../helpers/localStorageHandler";
+import { setTokenLocal } from "../utils/localStorageHandler";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL_ENDPOINT;
 

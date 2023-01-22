@@ -23,7 +23,7 @@ const items: MenuProps["items"] = [
   },
   {
     key: "3",
-    label: <a>Logout</a>,
+    label: <Link to="/logout">Logout</Link>,
   },
 ];
 

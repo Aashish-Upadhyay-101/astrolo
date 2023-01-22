@@ -14,6 +14,8 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ChatBox from "./pages/ChatBox/ChatBox";
+import ProtectRoute from "./utils/ProtectRoute";
+import Logout from "./pages/Logout";
 
 const stripe_key = process.env.REACT_APP_STRIPE_KEY || "";
 const stripePromise = loadStripe(stripe_key);
@@ -25,13 +27,32 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/astrolo" element={<AstroloHome />} />
+            <Route
+              path="/astrolo"
+              element={
+                <ProtectRoute>
+                  <AstroloHome />
+                </ProtectRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectRoute>
+                  <Dashboard />
+                </ProtectRoute>
+              }
+            />
             <Route
               path="/dashboard/chats/:conversationName"
-              element={<ChatBox />}
+              element={
+                <ProtectRoute>
+                  <ChatBox />
+                </ProtectRoute>
+              }
             />
             <Route
               path="/auth/activate-link/:username"
@@ -39,19 +60,35 @@ const App: React.FC = () => {
             />
             <Route
               path="/astrologer/:username"
-              element={<AstrolgoerProfileDetail />}
+              element={
+                <ProtectRoute>
+                  <AstrolgoerProfileDetail />
+                </ProtectRoute>
+              }
             />
             <Route
               path="/astrologer/:username/book-an-appointment"
-              element={<Appointments />}
+              element={
+                <ProtectRoute>
+                  <Appointments />
+                </ProtectRoute>
+              }
             />
             <Route
               path="/astrologer/checkout/success"
-              element={<PaymentSuccess />}
+              element={
+                <ProtectRoute>
+                  <PaymentSuccess />
+                </ProtectRoute>
+              }
             />
             <Route
               path="/astrologer/checkout/cancel"
-              element={<PaymentCancel />}
+              element={
+                <ProtectRoute>
+                  <PaymentCancel />
+                </ProtectRoute>
+              }
             />
             <Route path="*" element={<PageNotFound />} />
           </Routes>

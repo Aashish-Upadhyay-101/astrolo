@@ -3,7 +3,8 @@ import { UserTokenResponse } from "../../api/types";
 import {
   getAccessToken,
   getRefreshToken,
-} from "../../helpers/localStorageHandler";
+  removeTokens,
+} from "../../utils/localStorageHandler";
 
 const accessToken = getAccessToken();
 const refreshToken = getRefreshToken();
@@ -23,7 +24,10 @@ export const authSlice = createSlice({
   name: "authSlice",
   initialState,
   reducers: {
-    logout: () => initialState,
+    logout: (state) => {
+      state = initialState;
+      removeTokens();
+    },
     setToken: (state, action: PayloadAction<UserTokenResponse>) => {
       state.token = action.payload;
     },

@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { useGetAllAstrologersQuery } from "../../api/userApi";
-import { getAccessToken } from "../../helpers/localStorageHandler";
+import { getAccessToken } from "../../utils/localStorageHandler";
 import AstrologerItem from "../../components/AstrologerItem/AstrologerItem";
 import "./AstroloHome.css";
 

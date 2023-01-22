@@ -12,7 +12,7 @@ import { RootState } from "../../app/store";
 import { useGetConversationsQuery } from "../../api/chatApi";
 import { useGetMeQuery } from "../../api/userApi";
 import { MessageInterface } from "../../api/types";
-import { getAccessToken } from "../../helpers/localStorageHandler";
+import { getAccessToken } from "../../utils/localStorageHandler";
 import "./ChatBox.css";
 
 const ChatBox = () => {
