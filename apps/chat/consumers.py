@@ -47,7 +47,7 @@ class ChatConsumer(JsonWebsocketConsumer):
         messages = Message.objects.filter(conversation__name=self.conversation_name).order_by("created_at")[0: 50]
         self.send_json({
             "type": "last_50_messages",
-            "messages": MessageSerializer(messages, many=True).data
+            "messages": MessageSerializer(messages, many=True).data,
         })
 
     def disconnect(self, code):

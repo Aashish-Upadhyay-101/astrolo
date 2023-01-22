@@ -17,6 +17,7 @@ import "./ChatBox.css";
 
 const ChatBox = () => {
   const userToken = useSelector<RootState>((state) => state.authState.token);
+  const [otherUser, setOtherUser] = useState("");
   const [message, setMessage] = useState("");
   const [messageHistory, setMessageHistory] = useState([
     {} as MessageInterface,
@@ -77,6 +78,7 @@ const ChatBox = () => {
                   last_message={conversation?.last_message?.content}
                   other_user={conversation?.other_user?.user?.username}
                   me={getMeData?.user?.username || ""}
+                  setOtherUser={setOtherUser}
                 />
               );
             }
@@ -93,7 +95,7 @@ const ChatBox = () => {
                 src="https://picsum.photos/300/300"
                 alt="pp"
               />
-              <p className="inbox-box__info-name">Hello test user</p>
+              <p className="inbox-box__info-name">{otherUser}</p>
             </div>
             <div className="message-box__header-right">
               <PhoneOutlined className="normal-icon primary-icon" />
@@ -102,7 +104,6 @@ const ChatBox = () => {
           </div>
           <div className="message-box__message-area">
             {/* from here  */}
-
             {messageHistory.map((message) => (
               <>
                 {message?.from_user?.user.username ==
@@ -120,7 +121,6 @@ const ChatBox = () => {
                 )}
               </>
             ))}
-
             {/* to here  */}
           </div>
           <form className="message-box__input" onSubmit={messageSendHandler}>
