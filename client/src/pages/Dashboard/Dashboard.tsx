@@ -154,6 +154,8 @@ const Dashboard = () => {
       type: "error",
       content: "Appointment cancelled!",
     });
+
+    window.location.reload();
   };
 
   return (
