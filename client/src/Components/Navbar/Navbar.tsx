@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import { RootState } from "../../app/store";
 import { Avatar, Dropdown, MenuProps, Badge, Tooltip, Input } from "antd";
-import { useGetMeQuery } from "../api/userApi";
 import {
   BellOutlined,
   HeartOutlined,
   MessageOutlined,
   SearchOutlined,
   SnippetsOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import "./Navbar.css";
 

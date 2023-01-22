@@ -1,8 +1,8 @@
 import React from "react";
-import "./AstrologerItem.css";
-import { Button, Rate } from "antd";
-import { AstrologerItemProps } from "./types";
 import { Link } from "react-router-dom";
+import { Rate } from "antd";
+import { AstrologerItemProps } from "../types";
+import "./AstrologerItem.css";
 
 const AstrologerItem = ({
   profile_picture,

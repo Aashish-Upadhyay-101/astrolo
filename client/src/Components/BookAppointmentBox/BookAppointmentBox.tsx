@@ -1,8 +1,8 @@
+import React from "react";
+import { Link, useParams } from "react-router-dom";
 import { HeartOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import "./BookAppointmentBox.css";
-import React from "react";
-import { Link, useParams } from "react-router-dom";
 
 const BookAppointmentBox = ({ price }: { price: number | 0 }) => {
   const { username } = useParams();
@@ -14,9 +14,7 @@ const BookAppointmentBox = ({ price }: { price: number | 0 }) => {
         height="200"
         src="https://www.youtube.com/embed/eGE-tFalwpA"
         title="YouTube video player"
-        //   frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        //   allowfullscreen
       ></iframe>
       <div className="bookappointmentbox-infowrapper">
         <h2 className="text-2">${price}</h2>

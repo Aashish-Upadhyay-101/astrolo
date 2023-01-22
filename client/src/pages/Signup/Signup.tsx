@@ -6,7 +6,6 @@ import {
   useRegisterUserMutation,
   useSendVerificationEmailMutation,
 } from "../../api/authApi";
-import "../components/Navbar.css";
 import "./Signup.css";
 
 const Signup: React.FC = () => {

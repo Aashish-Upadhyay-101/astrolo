@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
-import "./ChatBox.css";
-import InboxBox from "../../components/InboxBox";
+import React, { useState } from "react";
+import useWebSocket from "react-use-websocket";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   PhoneOutlined,
   SendOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import InboxBox from "../../components/InboxBox";
 import { RootState } from "../../app/store";
 import { useGetConversationsQuery } from "../../api/chatApi";
 import { useGetMeQuery } from "../../api/userApi";
-import { useParams } from "react-router-dom";
-import { getAccessToken } from "../../helpers/localStorageHandler";
 import { MessageInterface } from "../../api/types";
+import { getAccessToken } from "../../helpers/localStorageHandler";
+import "./ChatBox.css";
 
 const ChatBox = () => {
   const userToken = useSelector<RootState>((state) => state.authState.token);

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import ActivateAccount from "./pages/ActivateAccount/ActivateAccount";
 import AstroloHome from "./pages/AstroloHome/AstroloHome";
 import Home from "./pages/Home/Home";
@@ -9,7 +10,6 @@ import PageNotFound from "./pages/PageNotFound";
 import Signup from "./pages/Signup/Signup";
 import AstrolgoerProfileDetail from "./pages/AstrologerProfileDetail/AstrologerProfileDetail";
 import Appointments from "./pages/Appointments/Appointments";
-import { Elements } from "@stripe/react-stripe-js";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import Dashboard from "./pages/Dashboard/Dashboard";

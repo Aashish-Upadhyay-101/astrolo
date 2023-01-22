@@ -1,5 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import {
@@ -17,8 +18,6 @@ import {
 } from "../../api/astroloApi";
 import "./Appointments.css";
 import Navbar from "../../components/Navbar/Navbar";
-import "../index.css";
-import moment from "moment";
 
 const Appointments = () => {
   const [appointmentDetail, setAppointmentDetail] = useState({
@@ -40,14 +39,7 @@ const Appointments = () => {
     },
   ] = useCreateAppointmentMutation();
 
-  const [
-    CreateCheckoutSession,
-    {
-      data,
-      isError: isErrorCreateCheckoutSession,
-      error: errorCreateCheckoutSession,
-    },
-  ] = useCreateCheckoutSessionMutation();
+  const [CreateCheckoutSession, { data }] = useCreateCheckoutSessionMutation();
 
   useEffect(() => {
     if (appointmentIsError) {

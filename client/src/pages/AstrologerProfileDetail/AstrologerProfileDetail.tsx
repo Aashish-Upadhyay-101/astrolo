@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Image, Rate } from "antd";
+import { Image } from "antd";
 import {
   useGetAstrologerDetailsQuery,
   useGetAstrologerReviewsQuery,
 } from "../../api/userApi";
 import Navbar from "../../components/Navbar/Navbar";
 import BookAppointmentBox from "../../components/BookAppointmentBox/BookAppointmentBox";
-import "./AstrolgoerProfileDetail.css";
 import Review from "../../components/Review/Review";
+import "./AstrologerProfileDetail.css";
 
 const AstrologerProfileDetail = () => {
   const [showMore, setShowMore] = useState(false);

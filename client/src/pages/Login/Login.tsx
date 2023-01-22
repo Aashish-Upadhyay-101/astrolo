@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { useLoginUserMutation } from "../../api/authApi";
-import "../components/Navbar.css";
 import "./Login.css";
 
 // signup page just like this

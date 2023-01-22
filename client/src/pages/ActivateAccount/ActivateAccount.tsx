@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../components/Navbar.css";
 import "./ActivateAccount.css";
 
 const ActivateAccount: React.FC = () => {
@@ -33,33 +32,6 @@ const ActivateAccount: React.FC = () => {
           A activation link has been sent to your email address. Please click
           the link and activate your account.
         </p>
-
-        {/* <Form
-          name="Activate account form"
-          className="ant-design-form"
-          onFinish={activateAccountSubmitHandler}
-        >
-          <Form.Item
-            name="Activation code"
-            rules={[
-              {
-                required: true,
-                message:
-                  "Please enter 6 digit code that was sent to your email!",
-              },
-            ]}
-          >
-            <Input
-              prefix={<FieldNumberOutlined className="site-form-item-icon" />}
-              placeholder="Enter 6 digit code"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className="btn-primary">
-              Activate
-            </Button>
-          </Form.Item>
-        </Form> */}
       </div>
     </section>
   );

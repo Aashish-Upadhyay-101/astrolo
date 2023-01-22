@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Dashboard.css";
-import Navbar from "../../components/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 import { Badge, Table, message } from "antd";
 import { Button, Modal, notification } from "antd";
 import {
@@ -8,7 +7,8 @@ import {
   useUpdateAppointmentStatusMutation,
 } from "../../api/astroloApi";
 import { useGetMeQuery } from "../../api/userApi";
-import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
+import "./Dashboard.css";
 
 const columns = [
   {
@@ -47,8 +47,6 @@ const Dashboard = () => {
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
 
-  // const { data: getMyDetailData, isError: getMyDetailIsError } =
-  //   useGetMeQuery();
   let { data: getAppointmentData } = useGetAppointmentsQuery();
   const {
     data: getMeData,

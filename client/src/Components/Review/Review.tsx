@@ -1,14 +1,9 @@
 import React from "react";
-import "./Review.css";
-import { AstrologerReviewProps } from "./types";
 import { Rate } from "antd";
+import { AstrologerReviewProps } from "../types";
+import "./Review.css";
 
-const Review = ({
-  rater,
-  rating,
-  review_comment,
-  review_date,
-}: AstrologerReviewProps) => {
+const Review = ({ rater, rating, review_comment }: AstrologerReviewProps) => {
   return (
     <div className="review">
       <div className="review__header">
